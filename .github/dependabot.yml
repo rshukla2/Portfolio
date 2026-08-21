@@ -5,8 +5,11 @@ updates:
     schedule:
       interval: monthly
     groups:
-      npm-dependencies:
+      npm-minor-and-patch:
         patterns: ["*"]
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: github-actions
     directory: /

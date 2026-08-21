@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+  Code2 as Github,
+  BriefcaseBusiness as Linkedin,
+  Mail,
+} from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 interface HeaderProps {

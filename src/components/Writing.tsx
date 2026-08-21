@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, Linkedin } from 'lucide-react';
+import { ArrowUpRight, BriefcaseBusiness as Linkedin } from 'lucide-react';
 import { WRITING_ARTICLES, PERSONAL_INFO } from '../data/portfolioData';
 
 export const Writing: React.FC = () => {

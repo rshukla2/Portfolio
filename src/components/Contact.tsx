@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Mail, Linkedin, Github, Copy, Check } from 'lucide-react';
+import {
+  Mail,
+  BriefcaseBusiness as Linkedin,
+  Code2 as Github,
+  Copy,
+  Check,
+} from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 export const Contact: React.FC = () => {

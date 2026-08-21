@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, ExternalLink } from 'lucide-react';
+import { Code2 as Github, ExternalLink } from 'lucide-react';
 import { PROJECTS } from '../data/portfolioData';
 import { AiCodeManagerVisualizer } from './projects/AiCodeManagerVisualizer';
 import { SpinWheelVisualizer } from './projects/SpinWheelVisualizer';
