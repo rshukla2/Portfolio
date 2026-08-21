@@ -1,0 +1,41 @@
+{
+  "name": "rishi-shukla-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Rishi Shukla's portfolio — applied AI, software engineering, and education.",
+  "license": "CC0-1.0",
+  "author": "Rishi Shukla",
+  "homepage": "https://rshukla2.github.io/Portfolio/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rshukla2/Portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rshukla2/Portfolio/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "vite --port=3000",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run build"
+  },
+  "dependencies": {
+    "lucide-react": "^0.546.0",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "tailwindcss": "^4.1.14",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3"
+  }
+}
