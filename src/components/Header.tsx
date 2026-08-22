@@ -6,7 +6,7 @@ import {
   Mail,
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
-import { Github, Linkedin } from './icons/BrandIcons';
+import { Github, Instagram, Linkedin } from './icons/BrandIcons';
 
 interface HeaderProps {
   activeSection: string;
@@ -45,18 +45,22 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
       <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between">
         {/* Brand */}
         <a
-          href="#"
-          id="nav-brand-logo"
-          className="group flex items-center gap-2.5 font-bold tracking-tight text-white transition-opacity hover:opacity-90 cursor-pointer"
+          href="#hero-section"
+          id="nav-brand"
+          aria-label="Rishi Shukla, AI Builder — back to top"
+          className="flex min-w-0 items-baseline gap-1.5 whitespace-nowrap transition-opacity hover:opacity-80"
         >
-          <div className="w-6 h-6 rounded-md bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center font-mono text-xs text-indigo-300 group-hover:scale-105 transition-transform">
-            R
-          </div>
-          <span className="text-sm sm:text-base tracking-tight font-semibold">RISHI SHUKLA</span>
+          <span className="text-sm font-semibold tracking-tight text-white sm:text-base">
+            Rishi Shukla
+          </span>
+          <span className="text-zinc-700" aria-hidden="true">|</span>
+          <span className="font-mono text-[10px] font-medium tracking-wide text-zinc-400 sm:text-xs">
+            AI Builder
+          </span>
         </a>
 
         {/* Desktop Nav */}
-        <nav id="desktop-nav-menu" className="hidden md:flex items-center gap-7 text-xs font-medium">
+        <nav id="desktop-nav-menu" className="hidden lg:flex items-center gap-7 text-xs font-medium">
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.href.replace('#', '');
             return (
@@ -76,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
         </nav>
 
         {/* Action / Social Link */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <a
             href={PERSONAL_INFO.linkedin}
             target="_blank"
@@ -96,6 +100,15 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
             <Github className="w-4 h-4" />
           </a>
           <a
+            href={PERSONAL_INFO.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Rishi Shukla on Instagram"
+            className="p-1.5 rounded-md text-zinc-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+          >
+            <Instagram className="w-4 h-4" />
+          </a>
+          <a
             href="#teaching"
             id="nav-cta-teaching"
             className="ml-2 px-3.5 py-1.5 rounded-md bg-white/[0.06] hover:bg-white/[0.12] text-xs font-medium text-white border border-white/[0.08] transition-all flex items-center gap-1 cursor-pointer"
@@ -111,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
           id="mobile-menu-toggle-btn"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle navigation menu"
-          className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-colors cursor-pointer"
+          className="lg:hidden p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-colors cursor-pointer"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
@@ -121,7 +134,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
       {mobileMenuOpen && (
         <div
           id="mobile-nav-dropdown"
-          className="md:hidden bg-[#0D0F14]/98 backdrop-blur-xl border-b border-white/[0.08] px-6 py-6 shadow-2xl space-y-4 animate-in fade-in slide-in-from-top-4 duration-200"
+          className="lg:hidden bg-[#0D0F14]/98 backdrop-blur-xl border-b border-white/[0.08] px-6 py-6 shadow-2xl space-y-4 animate-in fade-in slide-in-from-top-4 duration-200"
         >
           <div className="flex flex-col space-y-3">
             {NAV_ITEMS.map((item) => (
@@ -155,6 +168,15 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
                 className="p-2 rounded bg-white/[0.05] text-zinc-300 hover:text-white"
               >
                 <Github className="w-4 h-4" />
+              </a>
+              <a
+                href={PERSONAL_INFO.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="p-2 rounded bg-white/[0.05] text-zinc-300 hover:text-white"
+              >
+                <Instagram className="w-4 h-4" />
               </a>
               <a
                 href={`mailto:${PERSONAL_INFO.email}`}

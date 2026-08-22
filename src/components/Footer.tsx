@@ -1,5 +1,7 @@
 import React from 'react';
+import { Mail } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { Github, Instagram, Linkedin } from './icons/BrandIcons';
 
 export const Footer: React.FC = () => {
   return (
@@ -14,30 +16,42 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-6 text-xs font-mono text-zinc-400">
+        <nav aria-label="Social links" className="flex items-center gap-2 text-zinc-400">
           <a
             href={PERSONAL_INFO.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors"
+            aria-label="Rishi Shukla on LinkedIn"
+            className="rounded-lg border border-white/[0.06] bg-white/[0.03] p-2.5 transition-colors hover:border-white/[0.12] hover:bg-white/[0.07] hover:text-white"
           >
-            LinkedIn
+            <Linkedin className="h-4 w-4" />
           </a>
           <a
             href={PERSONAL_INFO.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors"
+            aria-label="Rishi Shukla on GitHub"
+            className="rounded-lg border border-white/[0.06] bg-white/[0.03] p-2.5 transition-colors hover:border-white/[0.12] hover:bg-white/[0.07] hover:text-white"
           >
-            GitHub
+            <Github className="h-4 w-4" />
+          </a>
+          <a
+            href={PERSONAL_INFO.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Rishi Shukla on Instagram"
+            className="rounded-lg border border-white/[0.06] bg-white/[0.03] p-2.5 transition-colors hover:border-white/[0.12] hover:bg-white/[0.07] hover:text-white"
+          >
+            <Instagram className="h-4 w-4" />
           </a>
           <a
             href={`mailto:${PERSONAL_INFO.email}`}
-            className="hover:text-white transition-colors"
+            aria-label="Email Rishi Shukla"
+            className="rounded-lg border border-white/[0.06] bg-white/[0.03] p-2.5 transition-colors hover:border-white/[0.12] hover:bg-white/[0.07] hover:text-white"
           >
-            Email
+            <Mail className="h-4 w-4" />
           </a>
-        </div>
+        </nav>
 
         <div className="text-xs font-mono text-zinc-400 text-center sm:text-right">
           Built with curiosity.

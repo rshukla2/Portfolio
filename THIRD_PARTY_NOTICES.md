@@ -2,7 +2,7 @@
 
 ## Lucide brand icon geometry
 
-The local GitHub and LinkedIn icon components in `src/components/icons/BrandIcons.tsx` use icon geometry from Lucide v0.546.0.
+The local GitHub, LinkedIn, and Instagram icon components in `src/components/icons/BrandIcons.tsx` use icon geometry from Lucide v0.546.0.
 
 ISC License
 

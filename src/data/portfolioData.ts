@@ -11,6 +11,7 @@ export const PERSONAL_INFO = {
   email: 'rishishukla2k@gmail.com',
   github: 'https://github.com/rshukla2',
   linkedin: 'https://www.linkedin.com/in/rishi-2k/',
+  instagram: 'https://www.instagram.com/rishi.builds.ai/',
   philosophy: 'I rarely leave a problem alone.',
   philosophyBody:
     'If something feels repetitive, inefficient, frustrating, or simply interesting, my first instinct is usually: Can I build something for this?',
