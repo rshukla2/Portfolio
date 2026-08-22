@@ -8,7 +8,7 @@ export const PERSONAL_INFO = {
   headlineSecond: 'I teach people to do the same.',
   bio: 'I build AI agents, automations, and software for problems I run into. Then I turn what works into practical lessons others can use.',
   currentlyExploring: 'Multi-agent systems for content and code',
-  email: 'rishishukla2k@gmail.com',
+  email: 'rishi@kidlinschool.ai',
   github: 'https://github.com/rshukla2',
   linkedin: 'https://www.linkedin.com/in/rishi-2k/',
   instagram: 'https://www.instagram.com/rishi.builds.ai/',
@@ -288,29 +288,29 @@ export const EDUCATION = [
 export const WRITING_ARTICLES: ArticleItem[] = [
   {
     id: 'post-1',
-    title: 'What I Learned Breaking a 40-Page PRD into 326 Tasks',
+    title: 'Why Giving an AI One Giant Prompt Fails (And How Agent Orchestration Fixes It)',
     summary:
-      'Notes from building a dependency graph, running tasks one at a time, and checking each result before moving on.',
+      'Breaking a 40-page PRD into 326 atomic tasks with dependency graphs and verification loops. Why task isolation beats massive context windows.',
     readTime: '6 min read',
     tag: 'Agent Architecture',
     publishedDate: 'Applied Experiments',
-    url: 'https://www.linkedin.com/in/rishi-2k/',
+    url: 'https://www.linkedin.com/posts/rishi-2k_i-got-tired-of-being-a-project-manager-for-activity-7473793241646030848-Ljr7',
   },
   {
     id: 'post-2',
-    title: 'The 30-Minute Prototype',
+    title: 'The 30-Minute Prototype: Why Experimentation is the Highest-Leverage Skill in AI',
     summary:
-      'What changes when a small, useful tool takes less time to build than it does to keep searching for one.',
+      'When the cost of building software drops to near zero, the bottleneck shifts from technical syntax to problem identification and taste.',
     readTime: '4 min read',
     tag: 'Vibe Coding & Mindset',
     publishedDate: 'Builder Reflections',
-    url: 'https://www.linkedin.com/in/rishi-2k/',
+    url: 'https://www.linkedin.com/posts/rishi-2k_one-of-the-biggest-changes-ai-has-made-in-activity-7496827037890949120-1shB',
   },
   {
     id: 'post-3',
-    title: 'Connecting an LLM to Email, Calendar, and Docs',
+    title: 'Beyond the ChatGPT Box: Building Conversational Interfaces Over Real APIs',
     summary:
-      'How I connect an assistant to real services while protecting credentials and checking actions before they run.',
+      'How to connect LLMs to your actual digital life (Email, Calendar, Docs, Wispr Flow) without exposing credentials or getting hallucinated actions.',
     readTime: '5 min read',
     tag: 'Systems & Workflows',
     publishedDate: 'Practical Guide',
@@ -318,9 +318,9 @@ export const WRITING_ARTICLES: ArticleItem[] = [
   },
   {
     id: 'post-4',
-    title: 'Teaching AI Without Chasing Every New Tool',
+    title: 'Teaching AI to Non-Engineers: Focus on Leverage, Not Tool Obsession',
     summary:
-      'The tools change quickly. Breaking down problems, writing clear instructions, and checking the result still matter.',
+      'Tools change every week. The core principles of problem decomposition, prompt precision, and automated loops remain invariant.',
     readTime: '5 min read',
     tag: 'AI Education',
     publishedDate: 'Pedagogy',
