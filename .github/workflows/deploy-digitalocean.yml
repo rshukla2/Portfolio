@@ -1,0 +1,62 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://rishishukla.ai/
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Build site
+        run: npm run build -- --base /
+
+      - name: Configure SSH
+        env:
+          DROPLET_KNOWN_HOSTS: ${{ secrets.DROPLET_KNOWN_HOSTS }}
+          DROPLET_SSH_KEY: ${{ secrets.DROPLET_SSH_KEY }}
+        run: |
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$DROPLET_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+          printf '%s\n' "$DROPLET_SSH_KEY" > "$RUNNER_TEMP/portfolio_deploy_key"
+          chmod 600 "$RUNNER_TEMP/portfolio_deploy_key"
+
+      - name: Deploy static site
+        env:
+          DROPLET_HOST: ${{ secrets.DROPLET_HOST }}
+          DROPLET_USER: ${{ secrets.DROPLET_USER }}
+        run: |
+          rsync -az --delete --delete-delay --delay-updates --chmod=D755,F644 \
+            -e "ssh -i $RUNNER_TEMP/portfolio_deploy_key" \
+            dist/ "$DROPLET_USER@$DROPLET_HOST:/var/www/portfolio/"
+
+      - name: Verify deployment
+        run: curl --fail --silent --show-error --retry 5 --retry-delay 2 https://rishishukla.ai/ > /dev/null
