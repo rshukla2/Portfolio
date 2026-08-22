@@ -5,7 +5,6 @@ import { EXPERIENCES, EDUCATION } from '../data/portfolioData';
 export const Experience: React.FC = () => {
   return (
     <section id="about" className="py-24 sm:py-36 px-5 sm:px-8 max-w-6xl mx-auto border-t border-white/[0.06]">
-      {/* Section Header */}
       <div className="max-w-3xl mb-16 sm:mb-20 space-y-4">
         <div className="font-mono text-xs text-indigo-400 tracking-widest uppercase">
           BACKGROUND & STORY
@@ -19,7 +18,6 @@ export const Experience: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16">
-        {/* Career Timeline */}
         <div className="lg:col-span-8 space-y-10">
           <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider flex items-center gap-2">
             <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
@@ -29,7 +27,6 @@ export const Experience: React.FC = () => {
           <div className="relative pl-6 border-l border-white/[0.08] space-y-10">
             {EXPERIENCES.map((exp) => (
               <div key={exp.id} className="relative group">
-                {/* Timeline node dot */}
                 <div className="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-[#0D0F14] border-2 border-indigo-500 group-hover:bg-indigo-400 transition-colors" />
 
                 <div className="space-y-2">
@@ -68,7 +65,6 @@ export const Experience: React.FC = () => {
           </div>
         </div>
 
-        {/* Education & Academic Rigor */}
         <div className="lg:col-span-4 space-y-8">
           <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider flex items-center gap-2">
             <GraduationCap className="w-3.5 h-3.5 text-indigo-400" />

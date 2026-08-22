@@ -13,7 +13,7 @@ const STAGES = [
     id: 'topics',
     title: 'Topic Discovery',
     tool: 'Claude 3.7 / GPT-4o Filter',
-    detail: 'Clusters signals into actionable themes: Vibe Coding, Agent Orchestration, Real-world AI Automation.',
+    detail: 'Groups source material into useful themes for AI coding, agents, and workflow automation.',
     output: 'Validated Topic Angles',
   },
   {
@@ -53,7 +53,7 @@ export const ContentSystemVisualizer: React.FC = () => {
         <div className="flex items-center gap-2">
           <Layers className="w-4 h-4 text-indigo-400" />
           <span className="font-mono text-xs text-zinc-300 font-medium tracking-wide uppercase">
-            Content Assembly System · Make.com & n8n Orchestration
+            Content Workflow · Make.com + n8n
           </span>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-zinc-400 font-mono">
@@ -61,7 +61,6 @@ export const ContentSystemVisualizer: React.FC = () => {
         </div>
       </div>
 
-      {/* Horizontal Interactive Flow */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-6">
         {STAGES.map((st, idx) => {
           const isSelected = idx === selectedStageIndex;
@@ -94,7 +93,6 @@ export const ContentSystemVisualizer: React.FC = () => {
         })}
       </div>
 
-      {/* Stage Detail Card */}
       <div className="bg-[#08090C] border border-white/[0.08] rounded-xl p-5">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] pb-3 mb-3">
           <div className="flex items-center gap-2">

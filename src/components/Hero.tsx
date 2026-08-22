@@ -10,10 +10,8 @@ export const Hero: React.FC = () => {
       id="hero-section"
       className="relative min-h-[92svh] lg:min-h-screen flex flex-col justify-center pt-28 pb-0 lg:pb-16 px-5 sm:px-8 max-w-6xl mx-auto overflow-hidden"
     >
-      {/* Rauno-inspired interactive words & cursor field */}
       <RaunoCursorWords />
 
-      {/* Desktop portrait composition */}
       <div
         className="pointer-events-none absolute inset-y-14 -right-[8%] z-0 hidden w-[65%] lg:block xl:-right-[5%] xl:w-[61%]"
         aria-hidden="true"
@@ -42,7 +40,6 @@ export const Hero: React.FC = () => {
       </div>
 
       <div className="relative z-20 max-w-4xl space-y-8 sm:space-y-10 lg:max-w-[62%] xl:max-w-[59%]">
-        {/* Eyebrow & Status Tag */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11px] font-mono tracking-widest text-zinc-300 uppercase">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
@@ -50,7 +47,6 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Headline */}
         <div className="space-y-2 sm:space-y-3">
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tight text-white leading-[1.05]">
             {PERSONAL_INFO.headlineFirst}
@@ -60,12 +56,10 @@ export const Hero: React.FC = () => {
           </h1>
         </div>
 
-        {/* Supporting Copy */}
         <p className="text-base sm:text-xl md:text-2xl lg:text-xl text-zinc-300 font-light leading-relaxed max-w-2xl lg:max-w-xl">
           {PERSONAL_INFO.bio}
         </p>
 
-        {/* Action CTAs */}
         <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6">
           <a
             href="#work"
@@ -86,7 +80,6 @@ export const Hero: React.FC = () => {
           </a>
         </div>
 
-        {/* Live Exploration Status Pill */}
         <div className="pt-6 sm:pt-10 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-xs font-mono text-zinc-400">
           <span className="text-zinc-500">Currently exploring</span>
           <span className="text-indigo-400">→</span>
@@ -94,7 +87,6 @@ export const Hero: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile and tablet portrait composition */}
       <div className="relative z-10 -mx-5 mt-5 aspect-[4/3] overflow-hidden sm:-mx-8 sm:mt-8 sm:aspect-[16/9] lg:hidden">
         <img
           src={portraitUrl}

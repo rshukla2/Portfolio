@@ -12,7 +12,6 @@ import { ContentSystemVisualizer } from './projects/ContentSystemVisualizer';
 export const FeaturedProjects: React.FC = () => {
   return (
     <section id="work" className="py-24 sm:py-36 px-5 sm:px-8 max-w-6xl mx-auto border-t border-white/[0.06]">
-      {/* Section Header */}
       <div className="max-w-3xl mb-16 sm:mb-24 space-y-4">
         <div className="font-mono text-xs text-indigo-400 tracking-widest uppercase">
           SELECTED EXPERIMENTS
@@ -21,11 +20,10 @@ export const FeaturedProjects: React.FC = () => {
           Things I’ve built because I got curious.
         </h2>
         <p className="text-base sm:text-xl text-zinc-400 font-light leading-relaxed">
-          Some started as problems. Some started as random ideas. Most became working software or automations surprisingly quickly.
+          A selection of tools and automations I built for problems I actually had.
         </p>
       </div>
 
-      {/* Large Alternating Project Story Blocks */}
       <div className="space-y-28 sm:space-y-36">
         {PROJECTS.map((project) => {
           return (
@@ -34,7 +32,6 @@ export const FeaturedProjects: React.FC = () => {
               id={`project-${project.id}`}
               className="space-y-8 pt-6"
             >
-              {/* Project Top Narrative Header */}
               <div className="max-w-3xl space-y-3">
                 <div className="flex items-center gap-3 font-mono text-xs text-zinc-500 uppercase tracking-wider">
                   <span className="text-indigo-400 font-bold">{project.number}</span>
@@ -47,7 +44,6 @@ export const FeaturedProjects: React.FC = () => {
                 </h3>
               </div>
 
-              {/* Story Narrative & Insights */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8 space-y-4 text-sm sm:text-base text-zinc-300 font-light leading-relaxed whitespace-pre-line">
                   {project.story}
@@ -62,7 +58,6 @@ export const FeaturedProjects: React.FC = () => {
                   )}
                 </div>
 
-                {/* Tags & Action Links */}
                 <div className="lg:col-span-4 space-y-5 lg:pl-4">
                   <div>
                     <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider mb-2">
@@ -108,7 +103,6 @@ export const FeaturedProjects: React.FC = () => {
                 </div>
               </div>
 
-              {/* Bespoke Interactive Visualizer for each project */}
               <div className="mt-8">
                 {project.id === 'ai-code-manager' && <AiCodeManagerVisualizer />}
                 {project.id === 'spin-the-wheel' && <SpinWheelVisualizer />}

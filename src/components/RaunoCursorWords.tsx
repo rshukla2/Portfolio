@@ -118,7 +118,6 @@ export const RaunoCursorWords: React.FC = () => {
       className="absolute inset-0 overflow-hidden pointer-events-none z-10"
       aria-hidden="true"
     >
-      {/* Subtle cursor spotlight */}
       <div
         className="absolute w-96 h-96 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none transition-opacity duration-300 ease-out opacity-25"
         style={{
@@ -128,7 +127,6 @@ export const RaunoCursorWords: React.FC = () => {
         }}
       />
 
-      {/* Floating words */}
       {words.map((w) => (
         <span
           key={w.id}

@@ -17,10 +17,10 @@ const PRESETS: PresetPrompt[] = [
     actions: [
       { label: 'Scanned 38 Gmail threads', detail: '2 high-priority partner replies flagged', service: 'Gmail API' },
       { label: 'Parsed Fireflies meeting transcript', detail: '3 engineering action items extracted', service: 'Fireflies AI' },
-      { label: 'Inspected Google Calendar availability', detail: 'Detected 2:00 PM – 4:00 PM gap', service: 'Google Calendar' },
+      { label: 'Inspected Google Calendar availability', detail: 'Detected a 2:00 PM to 4:00 PM gap', service: 'Google Calendar' },
       { label: 'Created focus block', detail: 'Event "Deep Work: Architecture Spec" placed', service: 'Google Calendar' },
     ],
-    resultSummary: 'Done. Synthesized 2 critical threads, logged 3 meeting deliverables to your Notion task list, and secured 2:00 PM – 4:00 PM on your calendar.',
+    resultSummary: 'Done. Summarized 2 critical threads, logged 3 meeting deliverables to your Notion task list, and reserved 2:00 PM to 4:00 PM on your calendar.',
   },
   {
     id: 'meeting-prep',
@@ -85,7 +85,6 @@ export const PersonalAssistantVisualizer: React.FC = () => {
         </div>
       </div>
 
-      {/* Preset Prompts Switcher */}
       <div className="flex flex-wrap gap-2 mb-4">
         {PRESETS.map((p) => (
           <button
@@ -103,9 +102,7 @@ export const PersonalAssistantVisualizer: React.FC = () => {
         ))}
       </div>
 
-      {/* Interactive Command Box */}
       <div className="bg-[#08090C] border border-white/[0.08] rounded-xl p-4 sm:p-5 space-y-4">
-        {/* User Prompt */}
         <div className="flex items-start gap-3 bg-white/[0.02] border border-white/[0.04] p-3.5 rounded-lg">
           <div className="w-7 h-7 rounded-full bg-zinc-800 text-zinc-300 flex items-center justify-center font-mono text-xs font-bold shrink-0">
             R
@@ -118,7 +115,6 @@ export const PersonalAssistantVisualizer: React.FC = () => {
           </div>
         </div>
 
-        {/* Action Pipeline Steps */}
         <div className="space-y-2 pt-2">
           <div className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-2 flex items-center justify-between">
             <span>AUTOMATED ACTIONS UNDERNEATH</span>
@@ -153,7 +149,6 @@ export const PersonalAssistantVisualizer: React.FC = () => {
           </div>
         </div>
 
-        {/* Final Synthesized Output */}
         <div className="p-3.5 rounded-lg bg-indigo-950/30 border border-indigo-500/20 flex items-start gap-3">
           <Sparkles className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
           <div className="text-xs text-indigo-100 leading-relaxed">

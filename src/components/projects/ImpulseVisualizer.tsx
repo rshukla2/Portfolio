@@ -54,16 +54,13 @@ export const ImpulseVisualizer: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-        {/* CSS Phone Shell */}
         <div className="md:col-span-5 flex justify-center">
           <div className="w-64 sm:w-72 bg-[#090A0D] border-[5px] border-[#22242D] rounded-[36px] p-3 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative">
-            {/* Phone Notch */}
             <div className="w-24 h-4 bg-[#22242D] rounded-full mx-auto mb-2 flex items-center justify-center">
               <div className="w-2.5 h-2.5 rounded-full bg-[#16171E] mr-2" />
               <div className="w-1.5 h-1.5 rounded-full bg-indigo-900" />
             </div>
 
-            {/* In-app Display */}
             <div className="bg-[#12141A] rounded-[24px] p-4 text-white">
               <div className="flex items-center justify-between border-b border-white/[0.06] pb-2 mb-3">
                 <span className="font-bold text-xs tracking-wider text-indigo-400 uppercase">IMPULSE FEED</span>
@@ -72,7 +69,6 @@ export const ImpulseVisualizer: React.FC = () => {
                 </span>
               </div>
 
-              {/* Item Card */}
               <div className="bg-[#1A1C24] border border-white/[0.08] rounded-xl p-4 text-center mb-3">
                 <div className="text-4xl mb-2 select-none transform hover:scale-110 transition-transform">
                   {item.emoji}
@@ -86,7 +82,6 @@ export const ImpulseVisualizer: React.FC = () => {
                 </div>
               </div>
 
-              {/* Dopamine Meter */}
               <div className="space-y-1 mb-3">
                 <div className="flex justify-between text-[10px] font-mono text-zinc-400">
                   <span>Anticipation Index</span>
@@ -100,7 +95,6 @@ export const ImpulseVisualizer: React.FC = () => {
                 </div>
               </div>
 
-              {/* Action Button */}
               <button
                 type="button"
                 id="impulse-buy-btn"
@@ -128,7 +122,6 @@ export const ImpulseVisualizer: React.FC = () => {
           </div>
         </div>
 
-        {/* Story & Technical Depth */}
         <div className="md:col-span-7 space-y-4">
           <div className="bg-[#08090C] border border-white/[0.08] rounded-lg p-5">
             <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
@@ -153,7 +146,7 @@ export const ImpulseVisualizer: React.FC = () => {
 
           <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.04] text-xs text-zinc-400 leading-relaxed">
             <strong className="text-zinc-200 block mb-1">Takeaway for Learners:</strong>
-            When you possess modern AI coding tooling and full-stack fundamentals, you never have to file curiosity away in a backlog — you can build it the same evening.
+            AI coding tools and full-stack fundamentals let me test the idea that same evening while it was still fresh.
           </div>
         </div>
       </div>

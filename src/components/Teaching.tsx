@@ -7,31 +7,29 @@ const TOPICS = [
   'Autonomous Agent Systems',
   'Vibe Coding & AI-Assisted Dev',
   'Workflow Automation (Make & n8n)',
-  'Claude & ChatGPT Power Workflows',
+  'Claude & ChatGPT Workflows',
   'Gemini & Multimodal APIs',
   'Perplexity Deep Research',
-  'Context Windows & Prompt Architecture',
+  'Context Windows & Clear Instructions',
   'Personal Productivity Bots',
-  'Applied Business Systems',
+  'AI for Business Workflows',
 ];
 
 export const Teaching: React.FC = () => {
   return (
     <section id="teaching" className="py-24 sm:py-36 px-5 sm:px-8 max-w-6xl mx-auto border-t border-white/[0.06]">
-      {/* Section Header */}
       <div className="max-w-3xl mb-16 sm:mb-20 space-y-4">
         <div className="font-mono text-xs text-indigo-400 tracking-widest uppercase">
           TEACHING PHILOSOPHY
         </div>
         <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-tight">
-          I don’t teach AI as a collection of tools.
+          I teach people how to build useful things with AI.
         </h2>
         <p className="text-base sm:text-xl text-zinc-300 font-light leading-relaxed">
-          Tools change too quickly. I teach people how to recognize where AI can create leverage — and then how to build the solution.
+          Specific tools change quickly, so I focus on skills that last: choosing a good use case, breaking it into steps, building a working version, and checking the result.
         </p>
       </div>
 
-      {/* 3 Large Pillars */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
         {TEACHING_PILLARS.map((pillar) => (
           <div
@@ -62,7 +60,6 @@ export const Teaching: React.FC = () => {
         ))}
       </div>
 
-      {/* Educator Positioning & Themes */}
       <div className="p-8 sm:p-12 rounded-3xl bg-[#0D0F14] border border-white/[0.08] relative overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-4">
@@ -76,7 +73,7 @@ export const Teaching: React.FC = () => {
             </h3>
 
             <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed">
-              Whether you are a student exploring code for the first time, a professional seeking to 10x output, or a founder automating repetitive operational bottlenecks — learning how to think with AI is the highest-leverage investment you can make.
+              I teach students, working professionals, and founders. We start with a real task and build something they can use, even if they have little coding experience.
             </p>
 
             <div className="pt-2">

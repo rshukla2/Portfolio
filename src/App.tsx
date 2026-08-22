@@ -39,7 +39,6 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#090A0D] text-[#E5E7EB] selection:bg-indigo-500/30 selection:text-white font-sans antialiased">
-      {/* Background subtle noise / ambient glow */}
       <div
         className="fixed inset-0 pointer-events-none z-0 opacity-40"
         style={{
@@ -49,10 +48,8 @@ export default function App() {
         aria-hidden="true"
       />
 
-      {/* Global Nav */}
       <Header activeSection={activeSection} />
 
-      {/* Main Content Area */}
       <main className="relative z-10">
         <Hero />
         <Philosophy />
@@ -64,7 +61,6 @@ export default function App() {
         <Contact />
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

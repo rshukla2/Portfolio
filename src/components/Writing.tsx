@@ -6,7 +6,6 @@ import { Linkedin } from './icons/BrandIcons';
 export const Writing: React.FC = () => {
   return (
     <section id="writing" className="py-24 sm:py-36 px-5 sm:px-8 max-w-6xl mx-auto border-t border-white/[0.06]">
-      {/* Section Header */}
       <div className="max-w-3xl mb-16 sm:mb-20 space-y-4">
         <div className="font-mono text-xs text-indigo-400 tracking-widest uppercase">
           WRITING & IDEAS
@@ -15,11 +14,10 @@ export const Writing: React.FC = () => {
           What I’m learning while I build.
         </h2>
         <p className="text-base sm:text-xl text-zinc-400 font-light leading-relaxed">
-          Field notes on applied AI agents, software orchestration, vibe coding, and developer leverage.
+          Notes from building AI agents, automations, and software with AI-assisted tools.
         </p>
       </div>
 
-      {/* 3-4 Curated Essays */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
         {WRITING_ARTICLES.map((article) => (
           <a
@@ -53,7 +51,6 @@ export const Writing: React.FC = () => {
         ))}
       </div>
 
-      {/* Follow on LinkedIn CTA */}
       <div className="flex justify-center">
         <a
           href={PERSONAL_INFO.linkedin}

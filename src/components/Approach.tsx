@@ -14,11 +14,10 @@ export const Approach: React.FC = () => {
           How I work with AI.
         </h2>
         <p className="text-base sm:text-xl text-zinc-400 font-light leading-relaxed">
-          A repeatable discipline for translating everyday friction into working software and timeless frameworks.
+          The process I use to turn an everyday problem into working software.
         </p>
       </div>
 
-      {/* Spacious Step Story Progression */}
       <div className="space-y-16 sm:space-y-24">
         {APPROACH_STEPS.map((step) => {
           const isHovered = hoveredStep === step.number;
@@ -36,7 +35,6 @@ export const Approach: React.FC = () => {
               }`}
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 items-start">
-                {/* Step Marker */}
                 <div className="lg:col-span-3 flex lg:flex-col items-center lg:items-start justify-between">
                   <span className="font-mono text-3xl sm:text-5xl font-extrabold text-zinc-700 select-none">
                     {step.number}
@@ -46,7 +44,6 @@ export const Approach: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Main Content */}
                 <div className="lg:col-span-9 space-y-4">
                   <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
                     {step.headline}

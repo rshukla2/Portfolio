@@ -5,25 +5,25 @@ const TIMELINE_EVENTS = [
   { time: '05:00:00 AM', label: 'Cron Trigger & Scraping', detail: 'Crawling 24 RSS feeds & X developer lists', icon: Search },
   { time: '05:01:15 AM', label: 'Hype Filter Agent', detail: 'Discarded 142 promotional & redundant clickbait articles', icon: Filter },
   { time: '05:02:40 AM', label: 'Importance Scoring', detail: 'Weighted by real architectural impact & benchmark signals', icon: Sparkles },
-  { time: '05:03:50 AM', label: 'Top 5 Synthesis', detail: 'Generated key takeaways + "Why It Matters" engineering notes', icon: CheckCircle2 },
+  { time: '05:03:50 AM', label: 'Brief Writing', detail: 'Drafted key takeaways and a short note on why each story matters', icon: CheckCircle2 },
   { time: '05:04:30 AM', label: 'Briefing Dispatched', detail: 'Delivered via Gmail API to personal inbox ✓', icon: Send },
 ];
 
 const CURATED_EMAIL_BRIEFING = [
   {
-    title: 'Autonomous Coding Agents Move from Single Prompt to DAG Task Orchestration',
-    takeaway: 'Multi-agent frameworks outperform monolithic LLM calls by 3.4x on complex refactoring tasks.',
-    whyItMatters: 'Shifts engineering from manual coding to specification architecture and evaluation harnesses.',
+    title: 'Coding Agents Adopt Task Graphs for Larger Refactors',
+    takeaway: 'Teams are breaking larger jobs into isolated tasks with explicit dependencies and tests.',
+    whyItMatters: 'Clear boundaries make long agent runs easier to review and recover.',
   },
   {
-    title: 'Open Source Small Language Models (SLMs) Match GPT-4 on Targeted Tool Calling',
-    takeaway: 'Fine-tuned 8B parameter models running locally achieve 98% JSON schema reliability.',
-    whyItMatters: 'Drastically lowers latency and cloud costs for autonomous cron agent loops.',
+    title: 'Small Local Models Improve at Structured Tool Calls',
+    takeaway: 'Targeted models can handle narrow JSON and tool-call tasks with lower latency.',
+    whyItMatters: 'Some routine agent steps may not need a large hosted model.',
   },
   {
-    title: 'Context Caching & Long-Window Optimization Slashes Agent Run Costs by 70%',
-    takeaway: 'Re-evaluating static codebase tokens is no longer a financial bottleneck.',
-    whyItMatters: 'Makes persistent autonomous background maintenance economically viable.',
+    title: 'Context Caching Reduces Repeated Work in Long Agent Runs',
+    takeaway: 'Stable instructions and reference material can be cached and reused across runs.',
+    whyItMatters: 'Long-running assistants become faster and less expensive to operate.',
   },
 ];
 
@@ -72,7 +72,6 @@ export const NewsAgentVisualizer: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Timeline Column */}
         <div className="lg:col-span-5 space-y-3">
           <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider mb-2">
             Execution Timeline (Daily 05:00 AM)
@@ -86,7 +85,6 @@ export const NewsAgentVisualizer: React.FC = () => {
 
               return (
                 <div key={event.label} className="relative group">
-                  {/* Dot */}
                   <div
                     className={`absolute -left-[31px] top-1 w-4 h-4 rounded-full border-2 transition-all flex items-center justify-center ${
                       isCurrent
@@ -123,7 +121,6 @@ export const NewsAgentVisualizer: React.FC = () => {
           </div>
         </div>
 
-        {/* Generated Email Preview Box */}
         <div className="lg:col-span-7">
           <div className="bg-[#08090C] border border-white/[0.08] rounded-xl p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-white/[0.06] pb-3 mb-3">

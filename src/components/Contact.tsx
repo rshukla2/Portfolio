@@ -33,10 +33,9 @@ export const Contact: React.FC = () => {
         </div>
 
         <p className="text-base sm:text-2xl text-zinc-300 font-light leading-relaxed max-w-3xl">
-          Whether you want to learn practical AI, rethink a manual workflow, build a bespoke agent prototype, or simply exchange ideas — I’m always interested in conversations with curious people.
+          If you are learning AI, rethinking a manual workflow, or building an agent, I would be glad to compare notes.
         </p>
 
-        {/* Primary Contact Actions */}
         <div className="pt-6 flex flex-wrap items-center gap-4 sm:gap-6">
           <a
             href={`mailto:${PERSONAL_INFO.email}`}

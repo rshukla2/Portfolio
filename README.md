@@ -1,4 +1,4 @@
-# Rishi Shukla — Portfolio
+# Rishi Shukla | Portfolio
 
 [![Deploy to GitHub Pages](https://github.com/rshukla2/Portfolio/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/rshukla2/Portfolio/actions/workflows/deploy-pages.yml)
 [![CI](https://github.com/rshukla2/Portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/rshukla2/Portfolio/actions/workflows/ci.yml)

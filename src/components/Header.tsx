@@ -43,11 +43,10 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
       }`}
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between">
-        {/* Brand */}
         <a
-          href="#hero-section"
+          href={import.meta.env.BASE_URL}
           id="nav-brand"
-          aria-label="Rishi Shukla, AI Builder — back to top"
+          aria-label="Rishi Shukla, AI Builder. Back to top"
           className="flex min-w-0 items-baseline gap-1.5 whitespace-nowrap transition-opacity hover:opacity-80"
         >
           <span className="text-sm font-semibold tracking-tight text-white sm:text-base">
@@ -59,7 +58,6 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
           </span>
         </a>
 
-        {/* Desktop Nav */}
         <nav id="desktop-nav-menu" className="hidden lg:flex items-center gap-7 text-xs font-medium">
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.href.replace('#', '');
@@ -79,7 +77,6 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
           })}
         </nav>
 
-        {/* Action / Social Link */}
         <div className="hidden lg:flex items-center gap-3">
           <a
             href={PERSONAL_INFO.linkedin}
@@ -118,7 +115,6 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
           </a>
         </div>
 
-        {/* Mobile Toggle Button */}
         <button
           type="button"
           id="mobile-menu-toggle-btn"
@@ -130,7 +126,6 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
         </button>
       </div>
 
-      {/* Mobile Dropdown */}
       {mobileMenuOpen && (
         <div
           id="mobile-nav-dropdown"
