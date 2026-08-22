@@ -33,7 +33,7 @@ export const FeaturedProjects: React.FC = () => {
             <article
               key={project.id}
               id={`project-${project.id}`}
-              className="space-y-8 pt-6 [content-visibility:auto] [contain-intrinsic-size:auto_1100px]"
+              className="space-y-8 pt-6"
             >
               {/* Project Top Narrative Header */}
               <div className="max-w-3xl space-y-3">
@@ -43,14 +43,14 @@ export const FeaturedProjects: React.FC = () => {
                   <span>{project.category}</span>
                 </div>
 
-                <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white leading-snug">
+                <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white leading-[1.15] sm:leading-snug text-balance">
                   {project.headline}
                 </h3>
               </div>
 
               {/* Story Narrative & Insights */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                <div className="lg:col-span-8 space-y-4 text-sm sm:text-base text-zinc-300 font-light leading-relaxed whitespace-pre-line">
+                <div className="lg:col-span-8 space-y-4 text-sm sm:text-base text-zinc-300 font-light leading-[1.58] sm:leading-relaxed tracking-[-0.008em] sm:tracking-normal [text-wrap:pretty] sm:[text-wrap:wrap] whitespace-pre-line">
                   {project.story}
 
                   {project.lesson && (

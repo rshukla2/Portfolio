@@ -8,6 +8,7 @@ interface InboxPhase {
   title: string;
   badge: string;
   description: string;
+  supportingNote?: string;
 }
 
 const PHASES: InboxPhase[] = [
@@ -17,6 +18,7 @@ const PHASES: InboxPhase[] = [
     title: 'Evening Shift Triggered',
     badge: 'Cron Execution',
     description: 'Scanning 58 emails received across the past 24 hours on business inbox.',
+    supportingNote: 'Messages are normalized into a consistent schema before analysis. Sender context, timestamps, thread history, and attachments stay linked so later stages can reason without losing provenance.',
   },
   {
     id: 'categorize',
@@ -24,6 +26,7 @@ const PHASES: InboxPhase[] = [
     title: 'Semantic Understanding & Labeling',
     badge: 'Zero Deletion Policy',
     description: 'Classifying content contextually into Important, Investors, Clients, Students, and Promotional labels.',
+    supportingNote: 'Labels come from semantic meaning rather than keyword rules. Ambiguous messages keep their original inbox state and are surfaced for review instead of being deleted.',
   },
   {
     id: 'extract',
@@ -173,138 +176,178 @@ export const InboxManagerVisualizer: React.FC = () => {
       </div>
 
       {/* Dynamic Workflow Stage Inspector */}
-      <div className="bg-[#08090C] border border-white/[0.08] rounded-xl p-4 sm:p-6 space-y-5">
-        {/* Phase 1: Intake */}
-        {currentPhaseIndex === 0 && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
-                Phase 1: Ingestion & Inbox Sweep
-              </div>
-              <span className="text-xs font-mono text-indigo-400">8:00:12 PM</span>
-            </div>
+      <div className="grid">
+        {PHASES.map((phase, phaseIndex) => {
+          const isActive = phaseIndex === currentPhaseIndex;
 
-            <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.04] flex items-center justify-between gap-4">
-              <div>
-                <div className="text-sm font-semibold text-white">58 Incoming Emails (Past 24 Hours)</div>
-                <div className="text-xs text-zinc-400 mt-1">
-                  Filtering spam gateways, fetching full message payloads, and initializing LLM batch parser.
-                </div>
-              </div>
-              <div className="text-right shrink-0">
-                <div className="text-2xl font-bold font-mono text-indigo-400">58 / 58</div>
-                <div className="text-[10px] font-mono text-zinc-500">Processed</div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Phase 2: Categorization */}
-        {currentPhaseIndex === 1 && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
-                Phase 2: Semantic Understanding & Sorting
-              </div>
-              <div className="text-[11px] font-mono text-emerald-400">No Emails Deleted Automatically</div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-              {CATEGORIES.map((cat) => (
-                <div
-                  key={cat.label}
-                  className={`p-3 rounded-lg border flex items-center justify-between ${cat.color}`}
-                >
-                  <span className="text-xs font-medium">{cat.label}</span>
-                  <span className="font-mono text-xs font-bold">{cat.count}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Phase 3: Extraction */}
-        {currentPhaseIndex === 2 && (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
-                Phase 3: Decision & Action Extraction
-              </div>
-              <span className="text-xs font-mono text-indigo-400">4 Critical Clusters</span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {EXTRACTED_INSIGHTS.map((item) => {
-                const IconComp = item.icon;
-                return (
-                  <div
-                    key={item.type}
-                    className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-1.5"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold">
-                        <IconComp className={`w-3.5 h-3.5 ${item.iconColor}`} />
-                        <span className={item.iconColor}>{item.type}</span>
-                      </div>
-                      <span className="text-[11px] font-mono text-zinc-400">{item.count}</span>
+          return (
+            <div
+              key={phase.id}
+              aria-hidden={!isActive}
+              className={`col-start-1 row-start-1 bg-[#08090C] border border-white/[0.08] rounded-xl p-4 sm:p-6 transition-opacity duration-200 ${
+                isActive
+                  ? 'relative z-10 opacity-100'
+                  : 'pointer-events-none select-none opacity-0'
+              }`}
+            >
+              {/* Phase 1: Intake */}
+              {phaseIndex === 0 && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      Phase 1: Ingestion & Inbox Sweep
                     </div>
-                    <div className="text-xs font-medium text-zinc-200">{item.title}</div>
-                    <div className="text-[11px] text-zinc-400 font-mono">{item.action}</div>
+                    <span className="text-xs font-mono text-indigo-400">8:00:12 PM</span>
                   </div>
-                );
-              })}
+
+                  <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed">
+                    {phase.description}
+                  </p>
+
+                  <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.04] flex items-center justify-between gap-4">
+                    <div>
+                      <div className="text-sm font-semibold text-white">58 Incoming Emails (Past 24 Hours)</div>
+                      <div className="text-xs text-zinc-400 mt-1">
+                        Filtering spam gateways, fetching full message payloads, and initializing LLM batch parser.
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="text-2xl font-bold font-mono text-indigo-400">58 / 58</div>
+                      <div className="text-[10px] font-mono text-zinc-500">Processed</div>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-lg bg-indigo-950/20 border border-indigo-500/20 text-xs text-zinc-300 font-light leading-relaxed">
+                    {phase.supportingNote}
+                  </div>
+                </div>
+              )}
+
+              {/* Phase 2: Categorization */}
+              {phaseIndex === 1 && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      Phase 2: Semantic Understanding & Sorting
+                    </div>
+                    <div className="text-[11px] font-mono text-emerald-400">No Emails Deleted Automatically</div>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed">
+                    {phase.description}
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+                    {CATEGORIES.map((cat) => (
+                      <div
+                        key={cat.label}
+                        className={`p-3 rounded-lg border flex items-center justify-between ${cat.color}`}
+                      >
+                        <span className="text-xs font-medium">{cat.label}</span>
+                        <span className="font-mono text-xs font-bold">{cat.count}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="p-3 rounded-lg bg-emerald-950/15 border border-emerald-500/20 text-xs text-zinc-300 font-light leading-relaxed">
+                    {phase.supportingNote}
+                  </div>
+                </div>
+              )}
+
+              {/* Phase 3: Extraction */}
+              {phaseIndex === 2 && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      Phase 3: Decision & Action Extraction
+                    </div>
+                    <span className="text-xs font-mono text-indigo-400">4 Critical Clusters</span>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed">
+                    {phase.description}
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {EXTRACTED_INSIGHTS.map((item) => {
+                      const IconComp = item.icon;
+                      return (
+                        <div
+                          key={item.type}
+                          className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-1.5"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold">
+                              <IconComp className={`w-3.5 h-3.5 ${item.iconColor}`} />
+                              <span className={item.iconColor}>{item.type}</span>
+                            </div>
+                            <span className="text-[11px] font-mono text-zinc-400">{item.count}</span>
+                          </div>
+                          <div className="text-xs font-medium text-zinc-200">{item.title}</div>
+                          <div className="text-[11px] text-zinc-400 font-mono">{item.action}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Phase 4: Final Digest Preview */}
+              {phaseIndex === 3 && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between gap-3 border-b border-white/[0.06] pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span className="text-xs font-mono text-white font-medium">
+                        8:05 PM Executive Inbox Briefing
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-mono text-zinc-500">Delivered to Rishi</span>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed">
+                    {phase.description}
+                  </p>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <div className="p-3 rounded-lg bg-amber-950/30 border border-amber-500/30 text-left">
+                      <div className="text-[10px] font-mono text-amber-300 uppercase font-bold">URGENT</div>
+                      <div className="text-xl font-bold font-mono text-white mt-0.5">2</div>
+                      <div className="text-[11px] text-zinc-400 mt-0.5">Require reply before 10 AM</div>
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-indigo-950/30 border border-indigo-500/30 text-left">
+                      <div className="text-[10px] font-mono text-indigo-300 uppercase font-bold">NEXT ACTIONS</div>
+                      <div className="text-xl font-bold font-mono text-white mt-0.5">5</div>
+                      <div className="text-[11px] text-zinc-400 mt-0.5">Extracted tasks queued</div>
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-left">
+                      <div className="text-[10px] font-mono text-emerald-300 uppercase font-bold">FINANCIAL</div>
+                      <div className="text-xl font-bold font-mono text-white mt-0.5">1</div>
+                      <div className="text-[11px] text-zinc-400 mt-0.5">Cloud invoice due in 5d</div>
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-purple-950/30 border border-purple-500/30 text-left">
+                      <div className="text-[10px] font-mono text-purple-300 uppercase font-bold">KEY THREADS</div>
+                      <div className="text-xl font-bold font-mono text-white mt-0.5">4</div>
+                      <div className="text-[11px] text-zinc-400 mt-0.5">Partners & students</div>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-zinc-400">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>35 promotional emails archived without deletion · Inbox state clean</span>
+                    </div>
+                    <span className="text-indigo-400">Total read time: ~90 seconds</span>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-
-        {/* Phase 4: Final Digest Preview */}
-        {currentPhaseIndex === 3 && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between border-b border-white/[0.06] pb-2">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span className="text-xs font-mono text-white font-medium">
-                  8:05 PM Executive Inbox Briefing
-                </span>
-              </div>
-              <span className="text-[11px] font-mono text-zinc-500">Delivered to Rishi</span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-              <div className="p-3 rounded-lg bg-amber-950/30 border border-amber-500/30 text-left">
-                <div className="text-[10px] font-mono text-amber-300 uppercase font-bold">URGENT</div>
-                <div className="text-xl font-bold font-mono text-white mt-0.5">2</div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">Require reply before 10 AM</div>
-              </div>
-
-              <div className="p-3 rounded-lg bg-indigo-950/30 border border-indigo-500/30 text-left">
-                <div className="text-[10px] font-mono text-indigo-300 uppercase font-bold">NEXT ACTIONS</div>
-                <div className="text-xl font-bold font-mono text-white mt-0.5">5</div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">Extracted tasks queued</div>
-              </div>
-
-              <div className="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-left">
-                <div className="text-[10px] font-mono text-emerald-300 uppercase font-bold">FINANCIAL</div>
-                <div className="text-xl font-bold font-mono text-white mt-0.5">1</div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">Cloud invoice due in 5d</div>
-              </div>
-
-              <div className="p-3 rounded-lg bg-purple-950/30 border border-purple-500/30 text-left">
-                <div className="text-[10px] font-mono text-purple-300 uppercase font-bold">KEY THREADS</div>
-                <div className="text-xl font-bold font-mono text-white mt-0.5">4</div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">Partners & students</div>
-              </div>
-            </div>
-
-            <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-zinc-400">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>35 promotional emails archived without deletion · Inbox state clean</span>
-              </div>
-              <span className="text-indigo-400">Total read time: ~90 seconds</span>
-            </div>
-          </div>
-        )}
+          );
+        })}
       </div>
 
       {/* Understated bottom badge */}

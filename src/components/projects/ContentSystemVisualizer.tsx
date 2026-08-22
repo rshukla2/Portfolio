@@ -11,6 +11,10 @@ interface ContentStage {
   description: string;
   engine: string;
   outputArtifact: string;
+  supportingDetails?: {
+    label: string;
+    text: string;
+  }[];
 }
 
 const STAGES: ContentStage[] = [
@@ -22,6 +26,16 @@ const STAGES: ContentStage[] = [
     description: 'Autonomous agent scours technical blogs, research papers, community questions, and real engineering discussions for high-signal ideas.',
     engine: 'Perplexity + Custom Scraping',
     outputArtifact: 'Curated Research Dossier',
+    supportingDetails: [
+      {
+        label: 'Signal Filtering',
+        text: 'Sources are scored for technical depth, relevance, and evidence of real audience demand before they enter the research set.',
+      },
+      {
+        label: 'Research Synthesis',
+        text: 'Duplicate ideas and shallow summaries are removed, leaving a concise dossier of claims, examples, and source links for the next stage.',
+      },
+    ],
   },
   {
     id: 'topic',
@@ -31,6 +45,16 @@ const STAGES: ContentStage[] = [
     description: 'Evaluates angles against audience value: practical AI implementation, agent orchestration architectures, and vibe-coding patterns.',
     engine: 'OpenAI API / Claude Analysis',
     outputArtifact: 'Top 3 Validated Angles',
+    supportingDetails: [
+      {
+        label: 'Pattern Clustering',
+        text: 'Related findings are grouped into recurring problems, emerging techniques, and questions builders are actively trying to solve.',
+      },
+      {
+        label: 'Angle Ranking',
+        text: 'Each cluster is ranked for novelty, usefulness, and audience fit, producing three distinct angles for editorial comparison.',
+      },
+    ],
   },
   {
     id: 'script',
@@ -40,6 +64,16 @@ const STAGES: ContentStage[] = [
     description: 'Transforms raw research into structured video scripts with 3 hook variations, technical walkthrough timestamps, and visual cues.',
     engine: 'Custom Structured Prompt Harness',
     outputArtifact: 'Full Draft Script & Timestamps',
+    supportingDetails: [
+      {
+        label: 'Narrative Structure',
+        text: 'The selected angle becomes a production-ready sequence with hook options, teaching beats, demonstrations, and visual cues.',
+      },
+      {
+        label: 'Verification Pass',
+        text: 'Technical claims, code examples, and transitions are flagged for review so unsupported details never reach production.',
+      },
+    ],
   },
   {
     id: 'review',
@@ -50,6 +84,16 @@ const STAGES: ContentStage[] = [
     description: 'Non-negotiable human taste checkpoint. Rishi personally refines tone, verifies code accuracy, adjusts pacing, and injects authentic builder stories.',
     engine: 'Human Judgment & Editorial Taste',
     outputArtifact: 'Approved Production Script',
+    supportingDetails: [
+      {
+        label: 'Editorial Judgment',
+        text: 'Automation pauses while Rishi rewrites generic language, sharpens the teaching sequence, and adds examples from real projects.',
+      },
+      {
+        label: 'Approval Gate',
+        text: 'The script moves forward only after its technical claims, pacing, tone, and visual direction have been personally approved.',
+      },
+    ],
   },
   {
     id: 'media',
@@ -74,8 +118,6 @@ export const ContentSystemVisualizer: React.FC = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, [isPlaying, isInViewport]);
-
-  const currentStage = STAGES[activeStageIndex];
 
   return (
     <div
@@ -167,90 +209,139 @@ export const ContentSystemVisualizer: React.FC = () => {
       </div>
 
       {/* Stage Detail & Media Branching Inspector */}
-      <div className="bg-[#08090C] border border-white/[0.08] rounded-xl p-5 space-y-5">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-3">
-          <div className="flex items-center gap-2">
-            <span
-              className={`font-mono text-xs px-2 py-0.5 rounded font-bold ${
-                currentStage.isHuman
-                  ? 'bg-amber-500/20 text-amber-300'
-                  : 'bg-indigo-500/20 text-indigo-300'
+      <div className="grid">
+        {STAGES.map((stage, stageIndex) => {
+          const isActive = stageIndex === activeStageIndex;
+
+          return (
+            <div
+              key={stage.id}
+              aria-hidden={!isActive}
+              className={`col-start-1 row-start-1 bg-[#08090C] border border-white/[0.08] rounded-xl p-5 space-y-5 transition-opacity duration-200 ${
+                isActive
+                  ? 'relative z-10 opacity-100'
+                  : 'pointer-events-none select-none opacity-0'
               }`}
             >
-              Stage {currentStage.stepNum}
-            </span>
-            <span className="text-sm font-semibold text-white">{currentStage.title}</span>
-            {currentStage.isHuman && (
-              <span className="text-xs text-amber-400 font-mono font-medium flex items-center gap-1">
-                <UserCheck className="w-3.5 h-3.5" />
-                Human Taste Checkpoint
-              </span>
-            )}
-          </div>
-          <span className="text-xs font-mono text-zinc-400">Engine: {currentStage.engine}</span>
-        </div>
-
-        <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed">
-          {currentStage.description}
-        </p>
-
-        {/* If Media Generation Stage (Stage 05) - Show the Visual Branching between HeyGen & Higgsfield */}
-        {activeStageIndex === 4 ? (
-          <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-3">
-            <div className="flex items-center gap-2 text-xs font-mono text-indigo-300 uppercase tracking-wider">
-              <GitFork className="w-3.5 h-3.5" />
-              <span>Parallel Media Generation Pipeline</span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* HeyGen Branch */}
-              <div className="p-3.5 rounded-lg bg-indigo-950/30 border border-indigo-500/30 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-indigo-200">
-                    <Video className="w-4 h-4 text-indigo-400" />
-                    <span>HeyGen</span>
-                  </div>
-                  <span className="text-[10px] font-mono text-indigo-300">Digital Twin / Avatar</span>
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-3">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`font-mono text-xs px-2 py-0.5 rounded font-bold ${
+                      stage.isHuman
+                        ? 'bg-amber-500/20 text-amber-300'
+                        : 'bg-indigo-500/20 text-indigo-300'
+                    }`}
+                  >
+                    Stage {stage.stepNum}
+                  </span>
+                  <span className="text-sm font-semibold text-white">{stage.title}</span>
+                  {stage.isHuman && (
+                    <span className="text-xs text-amber-400 font-mono font-medium flex items-center gap-1">
+                      <UserCheck className="w-3.5 h-3.5" />
+                      Human Taste Checkpoint
+                    </span>
+                  )}
                 </div>
-                <div className="text-xs text-zinc-300 font-light">
-                  Rishi’s configured digital twin avatars render high-definition video speech directly from approved script cues.
-                </div>
-                <div className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 pt-1">
-                  <CheckCircle2 className="w-3 h-3" />
-                  <span>Avatar Video Rendered</span>
-                </div>
+                <span className="text-xs font-mono text-zinc-400">Engine: {stage.engine}</span>
               </div>
 
-              {/* Higgsfield Branch */}
-              <div className="p-3.5 rounded-lg bg-purple-950/30 border border-purple-500/30 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-purple-200">
-                    <Film className="w-4 h-4 text-purple-400" />
-                    <span>Higgsfield</span>
+              <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed">
+                {stage.description}
+              </p>
+
+              {/* If Media Generation Stage (Stage 05) - Show the Visual Branching between HeyGen & Higgsfield */}
+              {stageIndex === 4 ? (
+                <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-3">
+                  <div className="flex items-center gap-2 text-xs font-mono text-indigo-300 uppercase tracking-wider">
+                    <GitFork className="w-3.5 h-3.5" />
+                    <span>Parallel Media Generation Pipeline</span>
                   </div>
-                  <span className="text-[10px] font-mono text-purple-300">AI B-Roll & Visuals</span>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {/* HeyGen Branch */}
+                    <div className="p-3.5 rounded-lg bg-indigo-950/30 border border-indigo-500/30 space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5 text-xs font-semibold text-indigo-200">
+                          <Video className="w-4 h-4 text-indigo-400" />
+                          <span>HeyGen</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-indigo-300">Digital Twin / Avatar</span>
+                      </div>
+                      <div className="text-xs text-zinc-300 font-light">
+                        Rishi’s configured digital twin avatars render high-definition video speech directly from approved script cues.
+                      </div>
+                      <div className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 pt-1">
+                        <CheckCircle2 className="w-3 h-3" />
+                        <span>Avatar Video Rendered</span>
+                      </div>
+                    </div>
+
+                    {/* Higgsfield Branch */}
+                    <div className="p-3.5 rounded-lg bg-purple-950/30 border border-purple-500/30 space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5 text-xs font-semibold text-purple-200">
+                          <Film className="w-4 h-4 text-purple-400" />
+                          <span>Higgsfield</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-purple-300">AI B-Roll & Visuals</span>
+                      </div>
+                      <div className="text-xs text-zinc-300 font-light">
+                        Generates cinematic supporting visuals, conceptual animations, and custom B-roll clips for key narrative moments.
+                      </div>
+                      <div className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 pt-1">
+                        <CheckCircle2 className="w-3 h-3" />
+                        <span>B-Roll Sequence Ready</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-xs text-zinc-300 font-light">
-                  Generates cinematic supporting visuals, conceptual animations, and custom B-roll clips for key narrative moments.
+              ) : (
+                <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div
+                      className={`flex items-center gap-2 text-xs font-mono uppercase tracking-wider ${
+                        stage.isHuman ? 'text-amber-300' : 'text-indigo-300'
+                      }`}
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Stage Processing Details</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2 text-[10px] font-mono">
+                      <span className="text-zinc-500">Make.com Output:</span>
+                      <strong className={stage.isHuman ? 'text-amber-300' : 'text-emerald-400'}>
+                        {stage.outputArtifact}
+                      </strong>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {stage.supportingDetails?.map((detail) => (
+                      <div
+                        key={detail.label}
+                        className={`p-3.5 rounded-lg border space-y-1.5 ${
+                          stage.isHuman
+                            ? 'bg-amber-950/20 border-amber-500/25'
+                            : 'bg-indigo-950/20 border-indigo-500/20'
+                        }`}
+                      >
+                        <div
+                          className={`text-[10px] font-mono font-semibold uppercase tracking-wider ${
+                            stage.isHuman ? 'text-amber-300' : 'text-indigo-300'
+                          }`}
+                        >
+                          {detail.label}
+                        </div>
+                        <p className="text-xs text-zinc-300 font-light leading-relaxed">
+                          {detail.text}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 pt-1">
-                  <CheckCircle2 className="w-3 h-3" />
-                  <span>B-Roll Sequence Ready</span>
-                </div>
-              </div>
+              )}
             </div>
-          </div>
-        ) : (
-          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-            <div className="flex items-center gap-2 text-zinc-400">
-              <span>Stage Artifact:</span>
-              <strong className={currentStage.isHuman ? 'text-amber-300' : 'text-emerald-400'}>
-                {currentStage.outputArtifact}
-              </strong>
-            </div>
-            <span className="text-zinc-500">Orchestrated via Make.com</span>
-          </div>
-        )}
+          );
+        })}
       </div>
 
       {/* Supporting philosophy footer quote */}
