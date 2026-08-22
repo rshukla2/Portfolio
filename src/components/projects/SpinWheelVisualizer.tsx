@@ -7,8 +7,8 @@ const HOOKS = [
   'Stop prompting ChatGPT like a search engine',
   'I automated my entire 5 AM morning routine',
   'Why simple software systems beat complex models',
-  'How I use AI coding tools on a small project',
-  'Why curiosity matters more when you build with AI',
+  'The exact workflow I use to vibe-code daily',
+  'Why curiosity is 10x more valuable with AI',
   'What happens when you break a 40-page PRD into agents',
 ];
 
@@ -78,11 +78,14 @@ export const SpinWheelVisualizer: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        {/* Wheel Container */}
         <div className="lg:col-span-6 flex flex-col items-center justify-center relative py-4">
+          {/* Wheel Pointer */}
           <div className="absolute top-2 z-20 flex flex-col items-center">
             <div className="w-4 h-6 bg-white border-2 border-indigo-600 rounded-b-full shadow-lg -translate-y-1 transform scale-110" />
           </div>
 
+          {/* SVG Wheel */}
           <div className="relative w-64 h-64 sm:w-72 sm:h-72">
             <svg
               viewBox="0 0 300 300"
@@ -151,6 +154,7 @@ export const SpinWheelVisualizer: React.FC = () => {
           </button>
         </div>
 
+        {/* Selected Hook Output & Story Box */}
         <div className="lg:col-span-6 space-y-4">
           <div className="bg-[#08090C] border border-white/[0.08] rounded-lg p-5">
             <div className="text-[11px] font-mono text-indigo-400 uppercase tracking-wider mb-1">
@@ -185,7 +189,7 @@ export const SpinWheelVisualizer: React.FC = () => {
 
           <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.04] text-xs text-zinc-400 leading-relaxed">
             <strong className="text-zinc-200 block mb-1">Why this project matters:</strong>
-            The available tools had too many ads or too few options, so I built and shipped my own in under 30 minutes.
+            Instead of spending hours searching for a free, non-bloated tool or tolerating ad popups, I wrote a prompt, styled the canvas, and shipped the code in under 30 minutes.
           </div>
         </div>
       </div>

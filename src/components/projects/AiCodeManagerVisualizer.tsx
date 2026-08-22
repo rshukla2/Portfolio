@@ -39,11 +39,12 @@ export const AiCodeManagerVisualizer: React.FC = () => {
       id="ai-code-manager-visualizer"
       className="w-full bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
     >
+      {/* Top Header & Interactive Toggles */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
           <span className="font-mono text-xs text-zinc-300 font-medium tracking-wide uppercase">
-            Autonomous Task Pipeline
+            Autonomous Orchestration Pipeline
           </span>
         </div>
 
@@ -82,6 +83,7 @@ export const AiCodeManagerVisualizer: React.FC = () => {
         </div>
       </div>
 
+      {/* Real Stats Metrics Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         <div className="bg-white/[0.02] border border-white/[0.05] p-3 rounded-lg">
           <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider">PRD Ingested</div>
@@ -101,6 +103,7 @@ export const AiCodeManagerVisualizer: React.FC = () => {
         </div>
       </div>
 
+      {/* Animated Flow Steps */}
       <div className="mb-6">
         <div className="text-xs font-mono text-zinc-400 mb-3 flex items-center justify-between">
           <span>PIPELINE EXECUTION FLOW</span>
@@ -145,6 +148,7 @@ export const AiCodeManagerVisualizer: React.FC = () => {
         </div>
       </div>
 
+      {/* Live Agent Execution Output Terminal */}
       <div className="bg-[#08090C] border border-white/[0.07] rounded-lg p-4 font-mono text-xs">
         <div className="flex items-center justify-between text-zinc-500 border-b border-white/[0.06] pb-2 mb-3 text-[11px]">
           <div className="flex items-center gap-2">

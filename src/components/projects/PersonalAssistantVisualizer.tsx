@@ -1,159 +1,269 @@
 import React, { useState } from 'react';
-import { Bot, CheckCircle2, Sparkles } from 'lucide-react';
+import { CheckCircle2, Sparkles, Hash } from 'lucide-react';
 
-interface PresetPrompt {
+interface Scenario {
   id: string;
-  label: string;
-  command: string;
-  actions: { label: string; detail: string; service: string }[];
-  resultSummary: string;
+  tabLabel: string;
+  category: string;
+  userMessage: string;
+  systemActions: {
+    service: string;
+    step: string;
+    detail: string;
+  }[];
+  assistantReply: string;
+  payloadHighlight?: string;
 }
 
-const PRESETS: PresetPrompt[] = [
+const SCENARIOS: Scenario[] = [
   {
-    id: 'deep-work',
-    label: 'Focus Block & Email Brief',
-    command: 'Summarize anything urgent from yesterday and block 2 hours this afternoon for deep work.',
-    actions: [
-      { label: 'Scanned 38 Gmail threads', detail: '2 high-priority partner replies flagged', service: 'Gmail API' },
-      { label: 'Parsed Fireflies meeting transcript', detail: '3 engineering action items extracted', service: 'Fireflies AI' },
-      { label: 'Inspected Google Calendar availability', detail: 'Detected a 2:00 PM to 4:00 PM gap', service: 'Google Calendar' },
-      { label: 'Created focus block', detail: 'Event "Deep Work: Architecture Spec" placed', service: 'Google Calendar' },
+    id: 'email-calendar',
+    tabLabel: 'Email + Calendar',
+    category: 'INBOX & SCHEDULING',
+    userMessage: 'What needs my attention today? Summarize the important emails and block two hours this afternoon so I can work on them.',
+    systemActions: [
+      { service: 'Email API', step: 'Searching inbox', detail: 'Analyzed 42 threads · 3 high-priority threads identified' },
+      { service: 'Google Calendar', step: 'Checking schedule', detail: 'Found open slot 2:30 PM to 4:30 PM' },
+      { service: 'Google Calendar', step: 'Creating focus block', detail: 'Event "Deep Focus: Urgent Email Processing" placed' },
+      { service: 'OpenAI API', step: 'Synthesizing briefing', detail: 'Structured summary generated with 1-click context' },
     ],
-    resultSummary: 'Done. Summarized 2 critical threads, logged 3 meeting deliverables to your Notion task list, and reserved 2:00 PM to 4:00 PM on your calendar.',
+    assistantReply: 'Here’s what matters today: 1) Client proposal review from Alex (needs sign-off by 5 PM), 2) Server migration heads-up, 3) Speaker deck confirmation. I’ve scheduled a 2-hour focus block from 2:30 PM to 4:30 PM on your calendar so you have uninterrupted time.',
+    payloadHighlight: 'Calendar Event & Summary Ready',
   },
   {
-    id: 'meeting-prep',
-    label: 'Client Meeting Preparation',
-    command: 'Prepare a 1-page briefing doc for my 10 AM call with RedMane stakeholders.',
-    actions: [
-      { label: 'Searched Google Drive for previous specs', detail: 'Matched 3 relevant architecture docs', service: 'Google Drive' },
-      { label: 'Aggregated recent Jira ticket statuses', detail: '9 tickets in progress, 0 blockers', service: 'Jira API' },
-      { label: 'Generated executive briefing in Docs', detail: 'Created "Stakeholder Brief - Aug 2026.docx"', service: 'Google Docs API' },
+    id: 'meeting-intel',
+    tabLabel: 'Meeting Takeaways',
+    category: 'WISPR FLOW INTELLIGENCE',
+    userMessage: 'What were the key takeaways from yesterday’s meetings?',
+    systemActions: [
+      { service: 'Wispr Flow', step: 'Connecting to Wispr Flow', detail: '2 recorded meeting sessions retrieved' },
+      { service: 'Wispr Flow', step: 'Notes & transcripts analyzed', detail: '4 core architectural takeaways extracted' },
+      { service: 'Task Engine', step: 'Identifying follow-ups', detail: '2 action items assigned to Rishi' },
+      { service: 'OpenAI API', step: 'Formatting actionable digest', detail: 'Clustered by decisions vs next steps' },
     ],
-    resultSummary: 'Briefing document created in Google Docs with summarized status, open architecture points, and past decision logs.',
+    assistantReply: 'Yesterday’s takeaways: 1) RedMane microservice auth is finalized on OAuth 2.1, 2) KIDLIN student onboarding moved to Discord bots, 3) Two open action items: send updated API docs to Sarah and finalize the Friday demo agenda.',
+    payloadHighlight: '4 Takeaways · 2 Follow-ups',
   },
   {
-    id: 'weekly-sync',
-    label: 'Weekly Content Sync',
-    command: 'Find our top 3 performing AI tutorials this month and generate outline drafts for next week.',
-    actions: [
-      { label: 'Queried analytics & engagement metrics', detail: 'Vibe-coding tutorial led with 94% retention', service: 'Analytics API' },
-      { label: 'Dispatched scriptwriting agent', detail: 'Generated 3 follow-up script frameworks', service: 'LLM Agent' },
-      { label: 'Pushed draft queue to Notion', detail: 'Updated content board with review status', service: 'Notion API' },
+    id: 'personal-tracking',
+    tabLabel: '“Log:” Convention',
+    category: 'LIFE TRACKER SPREADSHEET',
+    userMessage: 'Log: workout completed, 150g protein today, and 90 minutes deep work on creative goals.',
+    systemActions: [
+      { service: 'Google Sheets', step: 'Productivity Sheet located', detail: 'Target tab: "2026 Life Tracker"' },
+      { service: 'Google Sheets', step: 'Workout recorded', detail: 'Logged: Upper Body Hypertrophy (Session 42)' },
+      { service: 'Google Sheets', step: 'Protein intake recorded', detail: 'Logged: 150g (100% daily macro goal hit)' },
+      { service: 'Google Sheets', step: 'Daily progress updated', detail: 'Added 1.5h to Creative Projects streak' },
     ],
-    resultSummary: 'Top tutorials identified. Draft outlines generated and synced to your review pipeline.',
+    assistantReply: '✓ Productivity tracker updated! Recorded your workout, 150g protein, and 90m creative session. You’re currently on a 14-day consistency streak for creative building.',
+    payloadHighlight: 'Google Sheets Updated Instantly',
+  },
+  {
+    id: 'email-to-sheets',
+    tabLabel: 'Email → Sheets',
+    category: 'STRUCTURED EXTRACTION',
+    userMessage: 'Find the invoices in my recent emails and create a sheet with the vendor, amount, and due date.',
+    systemActions: [
+      { service: 'Email API', step: 'Searching email attachments', detail: 'Found 4 invoice PDFs from past 14 days' },
+      { service: 'OpenAI API', step: 'Extracting tabular data', detail: 'Extracted vendor, amount, invoice #, and due date' },
+      { service: 'Google Drive', step: 'Creating new spreadsheet', detail: 'Created "Invoices_Aug_2026.xlsx"' },
+      { service: 'Google Sheets', step: 'Populating rows', detail: '4 formatted rows with currency validation added' },
+    ],
+    assistantReply: 'Done! Created "Invoices_Aug_2026" in your Google Drive with 4 extracted invoices (Total: $842.10, next due date Aug 28). Linked in your Drive root folder.',
+    payloadHighlight: 'Automated Data Pipeline',
+  },
+  {
+    id: 'communication',
+    tabLabel: 'SMS & Voice',
+    category: 'MESSAGING & OUTREACH',
+    userMessage: 'Send a text to Marcus confirming tomorrow’s design review meeting at 11 AM.',
+    systemActions: [
+      { service: 'Contacts API', step: 'Contact identified', detail: 'Matched Marcus (+1 312-***-****)' },
+      { service: 'OpenAI API', step: 'Drafting SMS message', detail: 'Prepared polite, clear confirmation' },
+      { service: 'SMS Gateway', step: 'SMS dispatched', detail: 'Message sent via authorized gateway' },
+    ],
+    assistantReply: '✓ Text sent to Marcus: "Hey Marcus, confirming our design review tomorrow at 11:00 AM. Looking forward to it!"',
+    payloadHighlight: 'SMS Dispatched',
   },
 ];
 
 export const PersonalAssistantVisualizer: React.FC = () => {
-  const [selectedPreset, setSelectedPreset] = useState<PresetPrompt>(PRESETS[0]);
+  const [activeScenarioId, setActiveScenarioId] = useState<string>(SCENARIOS[0].id);
   const [isExecuting, setIsExecuting] = useState<boolean>(false);
-  const [executionStep, setExecutionStep] = useState<number>(4);
+  const [visibleStepCount, setVisibleStepCount] = useState<number>(4);
 
-  const triggerExecution = (preset: PresetPrompt) => {
-    setSelectedPreset(preset);
+  const currentScenario = SCENARIOS.find((s) => s.id === activeScenarioId) || SCENARIOS[0];
+
+  const handleSelectScenario = (scenario: Scenario) => {
+    setActiveScenarioId(scenario.id);
     setIsExecuting(true);
-    setExecutionStep(0);
+    setVisibleStepCount(0);
 
-    let current = 0;
+    let step = 0;
     const interval = setInterval(() => {
-      current += 1;
-      setExecutionStep(current);
-      if (current >= preset.actions.length) {
+      step += 1;
+      setVisibleStepCount(step);
+      if (step >= scenario.systemActions.length) {
         clearInterval(interval);
         setIsExecuting(false);
       }
-    }, 700);
+    }, 450);
   };
 
   return (
     <div
-      id="personal-assistant-visualizer"
+      id="personal-ai-os-visualizer"
       className="w-full bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
     >
+      {/* Top Discord Style Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4 mb-6">
-        <div className="flex items-center gap-2">
-          <Bot className="w-4 h-4 text-indigo-400" />
-          <span className="font-mono text-xs text-zinc-300 font-medium tracking-wide uppercase">
-            Conversational Autonomous Hub
-          </span>
-        </div>
-        <div className="flex items-center gap-1.5 text-xs text-zinc-400 font-mono">
-          <span className="w-2 h-2 rounded-full bg-emerald-400" />
-          <span>7 APIs Connected</span>
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-2 mb-4">
-        {PRESETS.map((p) => (
-          <button
-            key={p.id}
-            type="button"
-            onClick={() => triggerExecution(p)}
-            className={`px-3 py-1.5 rounded-md text-xs font-mono transition-all cursor-pointer ${
-              selectedPreset.id === p.id
-                ? 'bg-indigo-600/30 text-indigo-200 border border-indigo-500/50'
-                : 'bg-white/[0.03] text-zinc-400 hover:text-white border border-white/[0.05]'
-            }`}
-          >
-            {p.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="bg-[#08090C] border border-white/[0.08] rounded-xl p-4 sm:p-5 space-y-4">
-        <div className="flex items-start gap-3 bg-white/[0.02] border border-white/[0.04] p-3.5 rounded-lg">
-          <div className="w-7 h-7 rounded-full bg-zinc-800 text-zinc-300 flex items-center justify-center font-mono text-xs font-bold shrink-0">
-            R
+        <div className="flex items-center gap-2.5">
+          <div className="w-6 h-6 rounded-md bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center">
+            <Hash className="w-3.5 h-3.5 text-[#5865F2]" />
           </div>
-          <div className="flex-1">
-            <div className="text-[11px] font-mono text-zinc-500 mb-0.5">Rishi Shukla</div>
-            <div className="text-sm text-zinc-100 font-medium leading-relaxed">
-              “{selectedPreset.command}”
+          <div>
+            <div className="text-xs font-mono text-zinc-200 font-semibold flex items-center gap-2">
+              <span>ai-operations</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded bg-white/[0.05] text-zinc-400 font-mono">
+                Discord Client
+              </span>
+            </div>
+            <div className="text-[10px] font-mono text-zinc-500">Conversational System Hub · Real-time Orchestration</div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-emerald-400 font-medium">Assistant Online</span>
+        </div>
+      </div>
+
+      {/* Scenario Selector Pills */}
+      <div className="flex flex-wrap gap-2 mb-5">
+        {SCENARIOS.map((s) => {
+          const isSelected = s.id === activeScenarioId;
+          return (
+            <button
+              key={s.id}
+              type="button"
+              onClick={() => handleSelectScenario(s)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
+                isSelected
+                  ? 'bg-indigo-600/30 text-indigo-200 border border-indigo-500/50 shadow-sm'
+                  : 'bg-white/[0.03] text-zinc-400 hover:text-white border border-white/[0.05] hover:bg-white/[0.06]'
+              }`}
+            >
+              {s.tabLabel}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Discord Conversation Box */}
+      <div className="bg-[#08090C] border border-white/[0.08] rounded-xl p-4 sm:p-5 space-y-4">
+        {/* User Message (Rishi) */}
+        <div className="flex items-start gap-3">
+          <div className="w-8 h-8 rounded-full bg-indigo-900/60 border border-indigo-500/30 text-indigo-200 flex items-center justify-center font-mono text-xs font-bold shrink-0">
+            RS
+          </div>
+          <div className="flex-1 space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-white">Rishi Shukla</span>
+              <span className="text-[10px] font-mono text-zinc-500">Today at 2:14 PM</span>
+            </div>
+            <div className="text-sm text-zinc-100 font-normal leading-relaxed bg-white/[0.02] border border-white/[0.04] p-3 rounded-lg">
+              {currentScenario.userMessage}
             </div>
           </div>
         </div>
 
-        <div className="space-y-2 pt-2">
-          <div className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-2 flex items-center justify-between">
-            <span>AUTOMATED ACTIONS UNDERNEATH</span>
-            {isExecuting && <span className="text-indigo-400 animate-pulse">Executing tools...</span>}
+        {/* System Execution Trace (Orchestration in Discord) */}
+        <div className="ml-11 space-y-2.5 pt-1">
+          <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400 uppercase tracking-wider">
+            <span className="flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 text-indigo-400" />
+              <span>Background Actions Triggered</span>
+            </span>
+            {isExecuting ? (
+              <span className="text-indigo-400 animate-pulse font-bold">Calling APIs...</span>
+            ) : (
+              <span className="text-emerald-400">All tools executed ✓</span>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {selectedPreset.actions.map((act, idx) => {
-              const isDone = idx < executionStep;
-              const isCurrent = idx === executionStep && isExecuting;
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {currentScenario.systemActions.map((action, idx) => {
+              const isDone = idx < visibleStepCount;
+              const isCurrent = idx === visibleStepCount && isExecuting;
 
               return (
                 <div
                   key={idx}
-                  className={`p-3 rounded-lg border transition-all ${
+                  className={`p-2.5 rounded-lg border text-xs transition-all ${
                     isDone
                       ? 'bg-emerald-950/20 border-emerald-500/30 text-zinc-200'
                       : isCurrent
                       ? 'bg-indigo-950/40 border-indigo-500/50 text-white'
-                      : 'bg-white/[0.01] border-white/[0.03] text-zinc-600 opacity-50'
+                      : 'bg-white/[0.01] border-white/[0.03] text-zinc-600 opacity-40'
                   }`}
                 >
-                  <div className="flex items-center justify-between text-[10px] font-mono mb-1">
-                    <span className="text-indigo-400 font-medium">{act.service}</span>
-                    {isDone && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />}
+                  <div className="flex items-center justify-between text-[10px] font-mono mb-0.5">
+                    <span className="text-indigo-400 font-semibold">{action.service}</span>
+                    {isDone && <CheckCircle2 className="w-3 h-3 text-emerald-400" />}
                   </div>
-                  <div className="text-xs font-semibold">{act.label}</div>
-                  <div className="text-[11px] text-zinc-400 mt-0.5">{act.detail}</div>
+                  <div className="font-medium text-zinc-200">{action.step}</div>
+                  <div className="text-[11px] text-zinc-400 font-mono mt-0.5 truncate">
+                    {action.detail}
+                  </div>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div className="p-3.5 rounded-lg bg-indigo-950/30 border border-indigo-500/20 flex items-start gap-3">
-          <Sparkles className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
-          <div className="text-xs text-indigo-100 leading-relaxed">
-            {selectedPreset.resultSummary}
+        {/* Assistant Response in Discord */}
+        <div className="flex items-start gap-3 pt-2">
+          <div className="w-8 h-8 rounded-full bg-[#5865F2]/20 border border-[#5865F2]/50 text-[#5865F2] flex items-center justify-center font-mono text-xs font-bold shrink-0">
+            AI
           </div>
+          <div className="flex-1 space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-indigo-300">Personal AI Assistant</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#5865F2]/20 text-[#5865F2] font-mono text-[9px] font-bold">
+                BOT
+              </span>
+              <span className="text-[10px] font-mono text-zinc-500">Today at 2:14 PM</span>
+            </div>
+            <div className="text-xs sm:text-sm text-zinc-200 leading-relaxed bg-[#5865F2]/10 border border-[#5865F2]/20 p-3.5 rounded-lg">
+              {currentScenario.assistantReply}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Understated capability badges */}
+      <div className="mt-5 pt-4 border-t border-white/[0.06] flex flex-wrap items-center justify-center sm:justify-between gap-3 text-xs font-mono text-zinc-400">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-[11px]">
+          <span className="text-zinc-500 font-medium">Integrated Services:</span>
+          <span>Email</span>
+          <span>·</span>
+          <span>Calendar</span>
+          <span>·</span>
+          <span>Drive</span>
+          <span>·</span>
+          <span>Sheets</span>
+          <span>·</span>
+          <span>Docs</span>
+          <span>·</span>
+          <span className="text-indigo-300 font-semibold">Wispr Flow</span>
+          <span>·</span>
+          <span>Contacts</span>
+          <span>·</span>
+          <span>SMS</span>
+          <span>·</span>
+          <span>Voice</span>
+          <span>·</span>
+          <span>OpenAI</span>
         </div>
       </div>
     </div>
