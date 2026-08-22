@@ -1,6 +1,7 @@
 import React from 'react';
-import { Code2 as Github, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { PROJECTS } from '../data/portfolioData';
+import { Github } from './icons/BrandIcons';
 import { AiCodeManagerVisualizer } from './projects/AiCodeManagerVisualizer';
 import { SpinWheelVisualizer } from './projects/SpinWheelVisualizer';
 import { ImpulseVisualizer } from './projects/ImpulseVisualizer';

@@ -56,4 +56,4 @@ This is a fully static site. It does not require API keys, a backend, or reposit
 
 ## Public-domain dedication
 
-Original code and content in this repository are dedicated to the public domain under [CC0 1.0 Universal](LICENSE). Third-party packages, fonts, and trademarks remain subject to their respective terms.
+Original code and content in this repository are dedicated to the public domain under [CC0 1.0 Universal](LICENSE). Third-party packages, fonts, icons, and trademarks remain subject to their respective terms; see [third-party notices](THIRD_PARTY_NOTICES.md).

@@ -1,6 +1,7 @@
 import React from 'react';
-import { ArrowUpRight, BriefcaseBusiness as Linkedin } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { WRITING_ARTICLES, PERSONAL_INFO } from '../data/portfolioData';
+import { Linkedin } from './icons/BrandIcons';
 
 export const Writing: React.FC = () => {
   return (

@@ -3,11 +3,10 @@ import {
   Menu,
   X,
   ArrowUpRight,
-  Code2 as Github,
-  BriefcaseBusiness as Linkedin,
   Mail,
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { Github, Linkedin } from './icons/BrandIcons';
 
 interface HeaderProps {
   activeSection: string;

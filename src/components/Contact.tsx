@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import {
   Mail,
-  BriefcaseBusiness as Linkedin,
-  Code2 as Github,
   Copy,
   Check,
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { Github, Linkedin } from './icons/BrandIcons';
 
 export const Contact: React.FC = () => {
   const [copied, setCopied] = useState<boolean>(false);
