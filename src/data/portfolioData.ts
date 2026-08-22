@@ -129,7 +129,7 @@ export const PROJECTS: Project[] = [
     tags: ['Full-Stack', 'React', 'Mobile App', 'Google Play Store', 'Dopamine UX'],
     githubUrl: 'https://github.com/rshukla2/Impulse-FakeShoppingSimulator',
     demoUrl: 'https://rshukla2.github.io/Impulse-FakeShoppingSimulator/',
-    primaryCtaText: 'Simulate App',
+    primaryCtaText: 'Check out the Impulse app',
     secondaryCtaText: 'View on GitHub',
   },
   {
