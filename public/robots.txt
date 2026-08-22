@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rshukla2.github.io/Portfolio/sitemap.xml
+Sitemap: https://rishishukla.ai/sitemap.xml

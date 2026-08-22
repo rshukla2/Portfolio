@@ -6,7 +6,7 @@
 
 My public portfolio for applied AI experiments, software engineering work, and practical AI education.
 
-**Live site:** [rshukla2.github.io/Portfolio](https://rshukla2.github.io/Portfolio/)
+**Live site:** [rishishukla.ai](https://rishishukla.ai/)
 
 ## Built with
 
