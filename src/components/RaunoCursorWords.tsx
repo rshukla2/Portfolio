@@ -30,6 +30,7 @@ export const RaunoCursorWords: React.FC = () => {
   const wordIndexRef = useRef<number>(0);
   const mousePosRef = useRef<{ x: number; y: number }>({ x: -1000, y: -1000 });
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const hasFloatingWords = words.length > 0;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -83,8 +84,9 @@ export const RaunoCursorWords: React.FC = () => {
     };
   }, []);
 
-  // Animation frame loop to drift and fade floating words
   useEffect(() => {
+    if (!hasFloatingWords) return;
+
     let animId: number;
 
     const loop = () => {
@@ -105,7 +107,7 @@ export const RaunoCursorWords: React.FC = () => {
 
     animId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animId);
-  }, []);
+  }, [hasFloatingWords]);
 
   if (isTouchDevice) {
     return null;

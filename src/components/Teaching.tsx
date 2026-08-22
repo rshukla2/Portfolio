@@ -78,10 +78,12 @@ export const Teaching: React.FC = () => {
 
             <div className="pt-2">
               <a
-                href="#contact"
+                href="https://kidlinschool.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold tracking-wide transition-all shadow-lg shadow-indigo-600/20 cursor-pointer"
               >
-                <span>Learn with me</span>
+                <span>Learn with me at KIDLIN</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </a>
             </div>

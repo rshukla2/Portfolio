@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layers, CheckCircle2, UserCheck, Video, Film, Play, Pause, GitFork } from 'lucide-react';
+import { useInViewport } from '../../hooks/useInViewport';
 
 interface ContentStage {
   id: string;
@@ -62,21 +63,23 @@ const STAGES: ContentStage[] = [
 ];
 
 export const ContentSystemVisualizer: React.FC = () => {
+  const { ref: visualizerRef, isInViewport } = useInViewport<HTMLDivElement>();
   const [activeStageIndex, setActiveStageIndex] = useState<number>(3);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || !isInViewport) return;
     const interval = setInterval(() => {
       setActiveStageIndex((prev) => (prev + 1) % STAGES.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, isInViewport]);
 
   const currentStage = STAGES[activeStageIndex];
 
   return (
     <div
+      ref={visualizerRef}
       id="content-system-visualizer"
       className="w-full bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
     >

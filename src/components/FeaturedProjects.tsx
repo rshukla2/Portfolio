@@ -1,4 +1,5 @@
 import React from 'react';
+import { ExternalLink } from 'lucide-react';
 import { PROJECTS, PERSONAL_INFO } from '../data/portfolioData';
 import { Github } from './icons/BrandIcons';
 import { AiCodeManagerVisualizer } from './projects/AiCodeManagerVisualizer';
@@ -32,7 +33,7 @@ export const FeaturedProjects: React.FC = () => {
             <article
               key={project.id}
               id={`project-${project.id}`}
-              className="space-y-8 pt-6"
+              className="space-y-8 pt-6 [content-visibility:auto] [contain-intrinsic-size:auto_1100px]"
             >
               {/* Project Top Narrative Header */}
               <div className="max-w-3xl space-y-3">
@@ -81,6 +82,18 @@ export const FeaturedProjects: React.FC = () => {
                   </div>
 
                   <div className="pt-2 flex flex-wrap items-center gap-3">
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-medium text-white transition-all flex items-center gap-2"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>{project.primaryCtaText || 'View Live Demo'}</span>
+                      </a>
+                    )}
+
                     <a
                       href={project.githubUrl || PERSONAL_INFO.github}
                       target="_blank"

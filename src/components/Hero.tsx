@@ -19,6 +19,8 @@ export const Hero: React.FC = () => {
         <img
           src={portraitUrl}
           alt=""
+          width={1100}
+          height={1100}
           className="h-full w-full object-cover object-[center_24%] opacity-90"
           decoding="async"
           fetchPriority="high"
@@ -91,6 +93,8 @@ export const Hero: React.FC = () => {
         <img
           src={portraitUrl}
           alt={`Portrait of ${PERSONAL_INFO.name}`}
+          width={1100}
+          height={1100}
           className="h-full w-full object-cover object-[center_10%]"
           decoding="async"
           fetchPriority="high"

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, ShieldCheck, CheckCircle2, AlertTriangle, ListTodo, DollarSign, MessageSquare, Play, Pause } from 'lucide-react';
+import { useInViewport } from '../../hooks/useInViewport';
 
 interface InboxPhase {
   id: string;
@@ -84,19 +85,21 @@ const EXTRACTED_INSIGHTS = [
 ];
 
 export const InboxManagerVisualizer: React.FC = () => {
+  const { ref: visualizerRef, isInViewport } = useInViewport<HTMLDivElement>();
   const [currentPhaseIndex, setCurrentPhaseIndex] = useState<number>(3);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || !isInViewport) return;
     const timer = setInterval(() => {
       setCurrentPhaseIndex((prev) => (prev + 1) % PHASES.length);
     }, 3200);
     return () => clearInterval(timer);
-  }, [isPlaying]);
+  }, [isPlaying, isInViewport]);
 
   return (
     <div
+      ref={visualizerRef}
       id="inbox-manager-visualizer"
       className="w-full bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
     >

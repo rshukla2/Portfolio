@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, CheckCircle2, Terminal, ShieldCheck, Cpu } from 'lucide-react';
+import { useInViewport } from '../../hooks/useInViewport';
 
 const PIPELINE_STEPS = [
   { id: 'prd', label: 'PRD INGESTION', detail: '40-Page Product Spec' },
@@ -20,22 +21,24 @@ const LOG_SNIPPETS = [
 ];
 
 export const AiCodeManagerVisualizer: React.FC = () => {
+  const { ref: visualizerRef, isInViewport } = useInViewport<HTMLDivElement>();
   const [activeStepIndex, setActiveStepIndex] = useState<number>(4);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [currentLogIndex, setCurrentLogIndex] = useState<number>(0);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || !isInViewport) return;
     const interval = setInterval(() => {
       setActiveStepIndex((prev) => (prev + 1) % PIPELINE_STEPS.length);
       setCurrentLogIndex((prev) => (prev + 1) % LOG_SNIPPETS.length);
     }, 2400);
 
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, isInViewport]);
 
   return (
     <div
+      ref={visualizerRef}
       id="ai-code-manager-visualizer"
       className="w-full bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
     >
