@@ -33,3 +33,29 @@ export interface ArticleItem {
   publishedDate: string;
   url: string;
 }
+
+export type MuseDayStatus = 'released' | 'coming-soon';
+
+export type MuseDayType = 'Setup' | 'Experiment' | 'Comparison' | 'Workflow' | 'Build';
+
+export interface MuseComparisonCriterion {
+  label: string;
+  result?: string;
+}
+
+export interface MuseDay {
+  number: number;
+  status: MuseDayStatus;
+  type: MuseDayType;
+  title: string;
+  hook?: string;
+  shortDescription?: string;
+  reelUrl?: string;
+  prompt?: string;
+  promptTodo?: string;
+  workflowSteps?: string[];
+  customizationNotes?: string[];
+  learnings?: string[];
+  comparisonCriteria?: MuseComparisonCriterion[];
+  publishDate?: string;
+}

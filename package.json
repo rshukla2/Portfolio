@@ -20,6 +20,7 @@
   "scripts": {
     "dev": "vite --port=3000",
     "build": "vite build",
+    "postbuild": "cp dist/index.html dist/404.html",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run build"

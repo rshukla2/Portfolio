@@ -10,6 +10,7 @@ import { Github, Instagram, Linkedin } from './icons/BrandIcons';
 
 interface HeaderProps {
   activeSection: string;
+  isMusePage?: boolean;
 }
 
 const NAV_ITEMS = [
@@ -21,9 +22,11 @@ const NAV_ITEMS = [
   { label: 'Contact', href: '#contact' },
 ];
 
-export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
+export const Header: React.FC<HeaderProps> = ({ activeSection, isMusePage = false }) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const homePath = import.meta.env.BASE_URL;
+  const sectionHref = (hash: string) => `${homePath}${hash}`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,9 +47,9 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between">
         <a
-          href={import.meta.env.BASE_URL}
+          href={homePath}
           id="nav-brand"
-          aria-label="Rishi Shukla, AI Builder. Back to top"
+          aria-label="Rishi Shukla, AI Builder. Back to homepage"
           className="flex min-w-0 items-baseline gap-1.5 whitespace-nowrap transition-opacity hover:opacity-80"
         >
           <span className="text-sm font-semibold tracking-tight text-white sm:text-base">
@@ -60,11 +63,11 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
 
         <nav id="desktop-nav-menu" className="hidden lg:flex items-center gap-7 text-xs font-medium">
           {NAV_ITEMS.map((item) => {
-            const isActive = activeSection === item.href.replace('#', '');
+            const isActive = !isMusePage && activeSection === item.href.replace('#', '');
             return (
               <a
                 key={item.label}
-                href={item.href}
+                href={sectionHref(item.href)}
                 className={`transition-colors duration-200 cursor-pointer tracking-wide ${
                   isActive
                     ? 'text-white font-semibold'
@@ -106,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
             <Instagram className="w-4 h-4" />
           </a>
           <a
-            href="#teaching"
+            href={sectionHref('#teaching')}
             id="nav-cta-teaching"
             className="ml-2 px-3.5 py-1.5 rounded-md bg-white/[0.06] hover:bg-white/[0.12] text-xs font-medium text-white border border-white/[0.08] transition-all flex items-center gap-1 cursor-pointer"
           >
@@ -135,7 +138,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.label}
-                href={item.href}
+                href={sectionHref(item.href)}
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm font-medium text-zinc-300 hover:text-white py-1.5 transition-colors"
               >
@@ -183,7 +186,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection }) => {
             </div>
 
             <a
-              href="#teaching"
+              href={sectionHref('#teaching')}
               onClick={() => setMobileMenuOpen(false)}
               className="px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition-colors"
             >

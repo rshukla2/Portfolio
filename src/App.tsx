@@ -9,9 +9,22 @@ import { Experience } from './components/Experience';
 import { Writing } from './components/Writing';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { MusePage } from './pages/MusePage';
+
+const getRoutePath = () => {
+  const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const pathname = window.location.pathname;
+  const routePath = basePath && pathname.startsWith(basePath)
+    ? pathname.slice(basePath.length) || '/'
+    : pathname;
+
+  return routePath.replace(/\/$/, '') || '/';
+};
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>('hero');
+  const [routePath, setRoutePath] = useState<string>(getRoutePath);
+  const isMusePage = routePath === '/muse';
 
   useEffect(() => {
     const sections = document.querySelectorAll('section[id]');
@@ -37,6 +50,13 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleLocationChange = () => setRoutePath(getRoutePath());
+
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-[#090A0D] text-[#E5E7EB] selection:bg-indigo-500/30 selection:text-white font-sans antialiased">
       <div
@@ -48,17 +68,23 @@ export default function App() {
         aria-hidden="true"
       />
 
-      <Header activeSection={activeSection} />
+      <Header activeSection={activeSection} isMusePage={isMusePage} />
 
       <main className="relative z-10">
-        <Hero />
-        <Philosophy />
-        <FeaturedProjects />
-        <Approach />
-        <Teaching />
-        <Experience />
-        <Writing />
-        <Contact />
+        {isMusePage ? (
+          <MusePage />
+        ) : (
+          <>
+            <Hero />
+            <Philosophy />
+            <FeaturedProjects />
+            <Approach />
+            <Teaching />
+            <Experience />
+            <Writing />
+            <Contact />
+          </>
+        )}
       </main>
 
       <Footer />
