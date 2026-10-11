@@ -2,11 +2,14 @@ import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { PROJECTS, PERSONAL_INFO } from '../data/portfolioData';
 import { Github } from './icons/BrandIcons';
+import { EnterpriseDeliveryVisualizer } from './projects/EnterpriseDeliveryVisualizer';
 import { AiCodeManagerVisualizer } from './projects/AiCodeManagerVisualizer';
+import { AgentReliabilityLabVisualizer } from './projects/AgentReliabilityLabVisualizer';
 import { PersonalAssistantVisualizer } from './projects/PersonalAssistantVisualizer';
 import { ContentSystemVisualizer } from './projects/ContentSystemVisualizer';
 import { InboxManagerVisualizer } from './projects/InboxManagerVisualizer';
 import { NewsAgentVisualizer } from './projects/NewsAgentVisualizer';
+import { PartyGamesVisualizer } from './projects/PartyGamesVisualizer';
 import { ImpulseVisualizer } from './projects/ImpulseVisualizer';
 import { SpinWheelVisualizer } from './projects/SpinWheelVisualizer';
 
@@ -109,11 +112,14 @@ export const FeaturedProjects: React.FC = () => {
 
               {/* Bespoke Interactive Visualizer for each project */}
               <div className="mt-8">
+                {project.id === 'enterprise-delivery' && <EnterpriseDeliveryVisualizer />}
                 {project.id === 'ai-code-manager' && <AiCodeManagerVisualizer />}
+                {project.id === 'agent-reliability-lab' && <AgentReliabilityLabVisualizer />}
                 {project.id === 'personal-ai-os' && <PersonalAssistantVisualizer />}
                 {project.id === 'ai-content-creation' && <ContentSystemVisualizer />}
                 {project.id === 'ai-inbox-manager' && <InboxManagerVisualizer />}
                 {project.id === 'ai-news-agent' && <NewsAgentVisualizer />}
+                {project.id === 'party-games' && <PartyGamesVisualizer />}
                 {project.id === 'impulse-app' && <ImpulseVisualizer />}
                 {project.id === 'spin-the-wheel' && <SpinWheelVisualizer />}
               </div>

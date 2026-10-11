@@ -19,8 +19,34 @@ export const PERSONAL_INFO = {
 
 export const PROJECTS: Project[] = [
   {
-    id: 'ai-code-manager',
+    id: 'enterprise-delivery',
     number: '01',
+    category: 'ENTERPRISE AI · MULTI-AGENT SYSTEMS · DEVELOPER PRODUCTIVITY',
+    headline: 'I designed an agentic system that delivers and validates software, not just writes it.',
+    story:
+      'AI was accelerating how fast I could write code, but I kept losing 3 to 4 hours recreating complex application data and state just to test a single change. Coding stopped being the bottleneck; setup, validation, and repetitive testing became the bottleneck.\n\nSo I designed a multi-agent delivery system that takes software requirements and coordinates the whole delivery and validation workflow. A planner agent decomposes the requirements and flags anything ambiguous, and a human resolves that ambiguity. A setup agent prepares safe, disposable test conditions from reusable setup knowledge, so every run starts from a clean, repeatable state. A tester agent then drives the application through the UI and validates outcomes against executable test specifications. When something fails, structured failure evidence is packaged and handed to a fixer agent, which repairs and rebuilds, and the system retests. Guardrails and stop conditions bound every repair loop, and a human reviews and approves the result before anything is considered delivered.',
+    lesson:
+      'Speeding up code generation only helps if the rest of the delivery loop can keep up. Automate the repetitive validation, and keep humans responsible for ambiguity and final approval.',
+    stats: [
+      { label: 'Loop', value: 'Deliver → Validate → Fix' },
+      { label: 'Test State', value: 'Disposable' },
+      { label: 'Guardrails', value: 'Stop Conditions' },
+      { label: 'Sign-off', value: 'Human Approval' },
+    ],
+    tags: [
+      'Multi-Agent Orchestration',
+      'Executable Test Specs',
+      'Browser / UI Testing',
+      'Reusable Setup Knowledge',
+      'Structured Failure Evidence',
+      'Human-in-the-Loop',
+    ],
+    primaryCtaText: 'Explore Architecture',
+    secondaryCtaText: 'View on GitHub',
+  },
+  {
+    id: 'ai-code-manager',
+    number: '02',
     category: 'AI CODE MANAGER',
     headline: 'I built an AI project manager for coding agents.',
     story:
@@ -39,8 +65,36 @@ export const PROJECTS: Project[] = [
     secondaryCtaText: 'View on GitHub',
   },
   {
+    id: 'agent-reliability-lab',
+    number: '03',
+    category: 'AI RELIABILITY · EVALS · OBSERVABILITY · AGENT ENGINEERING',
+    headline: 'I built a lab for deliberately breaking AI agents — so I could watch how they recover.',
+    story:
+      'Most agent demos show the happy path. The interesting question is what happens when agents fail: a tool returns a 500, a call times out, a tool produces malformed structured output, a prompt-injection attempt slips through, retrieval returns irrelevant context, or an agent starts looping on the same call.\n\nSo I built a reliability lab: an environment for deliberately injecting failures into agent workflows and measuring whether the system can detect, recover from, or safely escalate them. It exercises retries with backoff, fallback behavior, stop conditions, human escalation, guardrails, structured-output validation, traces and observability, and evals for regression testing, with latency and cost tracked as first-class signals.\n\nThe point is not a perfect agent. It is a repeatable harness: every injected failure produces a trace, a recovery decision (retry, fallback, escalate, or stop safely), and a pass or fail against the expected behavior.',
+    lesson:
+      'An agent is only as reliable as its worst failure mode. Design and test the recovery paths first, and the success paths become easy to trust.',
+    stats: [
+      { label: 'Focus', value: 'Failure First' },
+      { label: 'Recovery', value: 'Retry · Fallback · Escalate · Stop' },
+      { label: 'Guardrails', value: 'Stop Conditions' },
+      { label: 'Validation', value: 'Structured + Evals' },
+    ],
+    tags: [
+      'Failure Injection',
+      'Retries & Backoff',
+      'Fallback Behavior',
+      'Prompt-Injection Guardrails',
+      'Loop Detection',
+      'Traces & Observability',
+      'Evals / Regression',
+      'Human Escalation',
+    ],
+    primaryCtaText: 'Open the Lab',
+    secondaryCtaText: 'View on GitHub',
+  },
+  {
     id: 'personal-ai-os',
-    number: '02',
+    number: '04',
     category: 'PERSONAL AI OPERATING SYSTEM',
     headline: 'I built a personal AI operating system inside Discord.',
     story:
@@ -59,7 +113,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'ai-content-creation',
-    number: '03',
+    number: '05',
     category: 'AI CONTENT CREATION SYSTEM',
     headline: 'I started treating content creation like a system.',
     story:
@@ -78,7 +132,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'ai-inbox-manager',
-    number: '04',
+    number: '06',
     category: 'AI INBOX MANAGER',
     headline: 'Every evening, an AI closes out my inbox for me.',
     story:
@@ -97,7 +151,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'ai-news-agent',
-    number: '05',
+    number: '07',
     category: 'AUTOMATION',
     headline: 'I didn’t want to search for AI news every morning.',
     story:
@@ -114,8 +168,33 @@ export const PROJECTS: Project[] = [
     secondaryCtaText: 'View Workflow',
   },
   {
+    id: 'party-games',
+    number: '08',
+    category: 'PRODUCT ENGINEERING · iOS · AI-ASSISTED DEVELOPMENT',
+    headline: 'I got tired of ads and paywalls, so I built the game-night app I wanted.',
+    story:
+      'Playing mobile party games with friends, I kept running into the same friction: ads, subscriptions, and simple features locked behind paywalls. Instead of continuing to complain about it, I built the version my friends and I actually wanted.\n\nThe app brings imposter-style games, trivia, word and dictionary games, and truth or dare into one place, with configurable rules and modes. No ads, no feature paywalls, no accounts. The center of it is LAN local-network multiplayer: people in the same room join the same session from their own phones, so a game night just works without a shared screen.\n\nNew features and modes came straight from real use with the friend group — saw the friction, built the fix, tested it with actual players, expanded it, and moved it toward an iOS App Store release.',
+    lesson:
+      'The best product signal is the friction you feel every week. When the fix is small enough to build yourself, building it beats waiting for it.',
+    stats: [
+      { label: 'Multiplayer', value: 'LAN / Local' },
+      { label: 'Modes', value: 'Imposter · Trivia · Dare' },
+      { label: 'Ads / Paywalls', value: '0' },
+      { label: 'Platform', value: 'iOS · App Store' },
+    ],
+    tags: [
+      'Local-Network Multiplayer',
+      'iOS / App Store',
+      'Party Game Design',
+      'Configurable Modes',
+      'AI-Assisted Development',
+    ],
+    primaryCtaText: 'See the Game Night',
+    secondaryCtaText: 'View on GitHub',
+  },
+  {
     id: 'impulse-app',
-    number: '06',
+    number: '09',
     category: 'FROM CURIOSITY TO APP',
     headline: 'I read about an app in South Korea. A few hours later, I had my own version.',
     story:
@@ -134,7 +213,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'spin-the-wheel',
-    number: '07',
+    number: '10',
     category: '30 MINUTE BUILD',
     headline: 'I wanted a better Reel hook wheel.',
     story:
