@@ -54,7 +54,7 @@ const FAILURES: Record<
 };
 
 const RECOVERY: Record<PathId, { label: string; icon: React.ComponentType<{ className?: string }>; when: string }> = {
-  retry: { label: 'Retry', icon: RefreshCw, when: 'Transient — timeouts, 500s, dropped deps' },
+  retry: { label: 'Retry', icon: RefreshCw, when: 'Timeouts, 500s, and dropped deps' },
   fallback: { label: 'Fallback', icon: GitBranch, when: 'Malformed or low-confidence output' },
   escalate: { label: 'Escalate', icon: LifeBuoy, when: 'Injection, ambiguity, high stakes' },
   stop: { label: 'Stop Safely', icon: Ban, when: 'Loop or runaway cost / guardrail breach' },

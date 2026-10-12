@@ -18,7 +18,7 @@ const MODES: Mode[] = [
     id: 'imposter',
     label: 'Imposter',
     icon: Users,
-    tagline: 'Everyone knows the word — except one. Find the imposter before they blend in.',
+    tagline: 'Everyone knows the word except one. Find the imposter before they blend in.',
     meta: 'Roles · 1 imposter · 60s reveal',
     accent: {
       text: 'text-violet-300',
@@ -46,7 +46,7 @@ const MODES: Mode[] = [
     id: 'dare',
     label: 'Truth or Dare',
     icon: Dices,
-    tagline: 'Two decks, one room. Pick a deck and choose your risk — configurable, no ads.',
+    tagline: 'Two decks, one room. Pick your risk and play it your way, no ads.',
     meta: 'Decks · Fully customizable',
     accent: {
       text: 'text-rose-300',
