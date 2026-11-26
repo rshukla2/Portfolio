@@ -7,7 +7,7 @@ const STEPS = [
   { step: '02', title: 'Experiment', subtitle: 'Rapid hypothesis with AI' },
   { step: '03', title: 'Build', subtitle: 'Functional prototype in hours' },
   { step: '04', title: 'Automate', subtitle: 'Durable system or framework' },
-  { step: '05', title: 'Optimize', subtitle: 'Cheap enough to keep running' },
+  { step: '05', title: 'Optimize', subtitle: 'Balance cost, quality, and reliability' },
 ];
 
 export const Philosophy: React.FC = () => {
@@ -33,7 +33,7 @@ export const Philosophy: React.FC = () => {
         </p>
 
         <p className="text-base sm:text-lg text-zinc-400 font-light leading-relaxed max-w-3xl">
-          And once it works, I make it cheap enough to keep running: the smallest model that does the job well, cached context, local models for bulk work, and hard limits on anything that calls a paid API.
+          Once a system works, I optimize its economics: matching model capability to task complexity, reusing cached context, offloading suitable workloads to local models, and enforcing spending limits on paid APIs.
         </p>
 
         <div className="pt-8 sm:pt-12">

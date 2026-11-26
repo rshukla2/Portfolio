@@ -6,7 +6,7 @@ export const PERSONAL_INFO = {
   eyebrow: 'AI SYSTEMS BUILDER · LEAD SOFTWARE ENGINEER · EDUCATOR',
   headlineFirst: 'I build with AI.',
   headlineSecond: 'I teach people to do the same.',
-  bio: 'I build enterprise software, cost-aware agentic AI systems, and practical products that solve real problems. Then I turn what works into lessons others can use.',
+  bio: 'I build enterprise software, reliable and cost-efficient agentic AI systems, and practical products that solve real problems. Then I turn what works into lessons others can use.',
   currentlyExploring: 'Agent orchestration and hybrid AI infrastructure',
   /** Public contact for recruiters and general enquiries. */
   email: 'rishishukla2k@gmail.com',
@@ -23,7 +23,7 @@ export const PERSONAL_INFO = {
 
 export const CAREER_HIGHLIGHTS: CareerHighlight[] = [
   { value: '4+ years', label: 'Software engineering and product development' },
-  { value: '$25/mo', label: 'Runs ~10 AI agents, ~1.5B tokens in 5 days' },
+  { value: '~97%', label: 'Prompt-cache hit rate across my ~10-agent AI system' },
   { value: '10K+', label: 'Daily financial transactions supported' },
   { value: '700+', label: 'Customer interviews across two startups' },
 ];
