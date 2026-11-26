@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { Sparkles, Copy, Check, RefreshCw } from 'lucide-react';
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const HOOKS = [
   'The 1 AI mistake 90% of builders make',
   'How I built this entire app in 20 minutes',
   'Stop prompting ChatGPT like a search engine',
-  'I automated my entire 5 AM morning routine',
+  'I automated my entire morning routine',
   'Why simple software systems beat complex models',
   'The exact workflow I use to vibe-code daily',
   'Why curiosity is 10x more valuable with AI',
@@ -24,6 +25,7 @@ const COLORS = [
 ];
 
 export const SpinWheelVisualizer: React.FC = () => {
+  const prefersReduced = usePrefersReducedMotion();
   const [rotation, setRotation] = useState<number>(0);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [selectedHook, setSelectedHook] = useState<string | null>(HOOKS[0]);
@@ -46,18 +48,27 @@ export const SpinWheelVisualizer: React.FC = () => {
     currentRotationRef.current = newRotation;
     setRotation(newRotation);
 
-    setTimeout(() => {
+    if (!prefersReduced) {
+      setTimeout(() => {
+        setIsSpinning(false);
+        setSelectedHook(HOOKS[randomSlice]);
+        setSpinCount((prev) => prev + 1);
+      }, 3200);
+    } else {
+      // In reduced motion mode, just set the final state without delay
       setIsSpinning(false);
       setSelectedHook(HOOKS[randomSlice]);
       setSpinCount((prev) => prev + 1);
-    }, 3200);
+    }
   };
 
   const handleCopy = () => {
     if (!selectedHook) return;
     navigator.clipboard.writeText(selectedHook);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (!prefersReduced) {
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   return (

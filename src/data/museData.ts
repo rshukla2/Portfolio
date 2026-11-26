@@ -5,7 +5,7 @@ export const MUSE_CONFIG = {
   officialMuseUrl: 'https://muse.ai/',
   signupFormAction: 'https://formsubmit.co/rishi@kidlinschool.ai',
   signupAjaxAction: 'https://formsubmit.co/ajax/rishi@kidlinschool.ai',
-  seriesStatus: 'Day 1 / 10 · Updated daily',
+  seriesStatus: 'Archived · Day 1 of 10',
   affiliationNote: 'Independent resource. Not affiliated with Meta.',
 };
 

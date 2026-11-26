@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, GraduationCap } from 'lucide-react';
-import { TEACHING_PILLARS } from '../data/portfolioData';
+import { TEACHING_PILLARS, PERSONAL_INFO } from '../data/portfolioData';
 
 const TOPICS = [
   'Generative AI Fundamentals',
@@ -76,7 +76,7 @@ export const Teaching: React.FC = () => {
               I teach students, working professionals, and founders. We start with a real task and build something they can use, even if they have little coding experience.
             </p>
 
-            <div className="pt-2">
+            <div className="pt-2 space-y-3">
               <a
                 href="https://kidlinschool.ai/"
                 target="_blank"
@@ -86,6 +86,16 @@ export const Teaching: React.FC = () => {
                 <span>Learn with me at KIDLIN</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </a>
+
+              <div className="text-sm text-zinc-400">
+                Questions about classes?{' '}
+                <a
+                  href={`mailto:${PERSONAL_INFO.kidlinEmail}`}
+                  className="text-indigo-300 hover:underline"
+                >
+                  Email us
+                </a>
+              </div>
             </div>
           </div>
 

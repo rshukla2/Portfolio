@@ -7,6 +7,7 @@ const STEPS = [
   { step: '02', title: 'Experiment', subtitle: 'Rapid hypothesis with AI' },
   { step: '03', title: 'Build', subtitle: 'Functional prototype in hours' },
   { step: '04', title: 'Automate', subtitle: 'Durable system or framework' },
+  { step: '05', title: 'Optimize', subtitle: 'Cheap enough to keep running' },
 ];
 
 export const Philosophy: React.FC = () => {
@@ -31,17 +32,21 @@ export const Philosophy: React.FC = () => {
           </span>
         </p>
 
+        <p className="text-base sm:text-lg text-zinc-400 font-light leading-relaxed max-w-3xl">
+          And once it works, I make it cheap enough to keep running: the smallest model that does the job well, cached context, local models for bulk work, and hard limits on anything that calls a paid API.
+        </p>
+
         <div className="pt-8 sm:pt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6">
             {STEPS.map((item, idx) => (
               <div
                 key={item.title}
-                className="group p-5 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-indigo-500/40 hover:bg-white/[0.04] transition-all"
+                className="group p-5 rounded-xl last:col-span-2 md:last:col-span-1 bg-white/[0.02] border border-white/[0.05] hover:border-indigo-500/40 hover:bg-white/[0.04] transition-all"
               >
                 <div className="font-mono text-[11px] text-zinc-500 mb-2">{item.step}</div>
                 <div className="text-lg font-semibold text-white tracking-tight flex items-center justify-between">
                   <span>{item.title}</span>
-                  {idx < 3 && (
+                  {idx < STEPS.length - 1 && (
                     <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-indigo-400 transition-colors hidden md:block" />
                   )}
                 </div>

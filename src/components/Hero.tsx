@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, ArrowRight } from 'lucide-react';
+import { ArrowDown, FileText } from 'lucide-react';
 import portraitUrl from '../../assets/rishi-shukla-portrait.jpg';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { RaunoCursorWords } from './RaunoCursorWords';
@@ -73,12 +73,14 @@ export const Hero: React.FC = () => {
           </a>
 
           <a
-            href="#teaching"
-            id="hero-cta-learn-with-me"
-            className="px-4 py-3 text-sm font-medium text-zinc-300 hover:text-white transition-colors flex items-center gap-2 group cursor-pointer"
+            href={PERSONAL_INFO.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            id="hero-cta-resume"
+            className="px-6 py-3.5 rounded-lg border border-white/[0.14] bg-white/[0.06] hover:bg-white/[0.12] hover:border-white/[0.24] text-sm font-medium text-white transition-all flex items-center gap-2.5 group cursor-pointer active:scale-95"
           >
-            <span>Learn with me</span>
-            <ArrowRight className="w-4 h-4 text-indigo-400 group-hover:translate-x-1 transition-transform" />
+            <span>View resume</span>
+            <FileText className="w-4 h-4 text-indigo-400 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
 

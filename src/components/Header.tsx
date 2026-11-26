@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
   Menu,
   X,
-  ArrowUpRight,
   Mail,
+  FileText,
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Github, Instagram, Linkedin } from './icons/BrandIcons';
@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, isMusePage = fals
         <a
           href={homePath}
           id="nav-brand"
-          aria-label="Rishi Shukla, AI Builder. Back to homepage"
+          aria-label="Rishi Shukla, AI Systems Builder. Back to homepage"
           className="flex min-w-0 items-baseline gap-1.5 whitespace-nowrap transition-opacity hover:opacity-80"
         >
           <span className="text-sm font-semibold tracking-tight text-white sm:text-base">
@@ -57,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, isMusePage = fals
           </span>
           <span className="text-zinc-700" aria-hidden="true">|</span>
           <span className="font-mono text-[10px] font-medium tracking-wide text-zinc-400 sm:text-xs">
-            AI Builder
+            AI Systems Builder
           </span>
         </a>
 
@@ -109,12 +109,14 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, isMusePage = fals
             <Instagram className="w-4 h-4" />
           </a>
           <a
-            href={sectionHref('#teaching')}
-            id="nav-cta-teaching"
+            href={`${import.meta.env.BASE_URL}${PERSONAL_INFO.resumeUrl.replace('/', '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            id="nav-cta-resume"
             className="ml-2 px-3.5 py-1.5 rounded-md bg-white/[0.06] hover:bg-white/[0.12] text-xs font-medium text-white border border-white/[0.08] transition-all flex items-center gap-1 cursor-pointer"
           >
-            <span>Learn With Me</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Resume</span>
+            <FileText className="w-3.5 h-3.5 text-indigo-400" />
           </a>
         </div>
 
@@ -186,11 +188,13 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, isMusePage = fals
             </div>
 
             <a
-              href={sectionHref('#teaching')}
+              href={`${import.meta.env.BASE_URL}${PERSONAL_INFO.resumeUrl.replace('/', '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
               className="px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition-colors"
             >
-              Learn With Me
+              Resume
             </a>
           </div>
         </div>

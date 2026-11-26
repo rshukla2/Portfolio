@@ -1,47 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Clock, CheckCircle2, Search, Filter, Sparkles, Send, RefreshCw } from 'lucide-react';
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const TIMELINE_EVENTS = [
-  { time: '05:00:00 AM', label: 'Cron Trigger & Scraping', detail: 'Crawling 24 RSS feeds & X developer lists', icon: Search },
-  { time: '05:01:15 AM', label: 'Hype Filter Agent', detail: 'Discarded 142 promotional & redundant clickbait articles', icon: Filter },
-  { time: '05:02:40 AM', label: 'Importance Scoring', detail: 'Weighted by real architectural impact & benchmark signals', icon: Sparkles },
-  { time: '05:03:50 AM', label: 'Top 5 Synthesis', detail: 'Generated key takeaways + "Why It Matters" engineering notes', icon: CheckCircle2 },
-  { time: '05:04:30 AM', label: 'Briefing Dispatched', detail: 'Delivered via Gmail API to personal inbox ✓', icon: Send },
+  { time: '08:00:00 AM', label: 'Scheduled run (Muse by Meta)', detail: 'Scanning recent AI and tech sources', icon: Search },
+  { time: '08:01:15 AM', label: 'Hype Filter', detail: 'Filtering out promotional and redundant clickbait articles', icon: Filter },
+  { time: '08:02:40 AM', label: 'Importance Scoring', detail: 'Weighted by real architectural impact and signal quality', icon: Sparkles },
+  { time: '08:03:50 AM', label: 'Top 5 Synthesis', detail: 'Generated key takeaways plus engineering context', icon: CheckCircle2 },
+  { time: '08:04:00 AM', label: 'Briefing Ready', detail: 'Ready for morning review in Muse by Meta', icon: Send },
 ];
 
 const CURATED_EMAIL_BRIEFING = [
   {
-    title: 'Autonomous Coding Agents Move from Single Prompt to DAG Task Orchestration',
-    takeaway: 'Multi-agent frameworks outperform monolithic LLM calls by 3.4x on complex refactoring tasks.',
-    whyItMatters: 'Shifts engineering from manual coding to specification architecture and evaluation harnesses.',
+    title: 'Coding Agents Adopt Dependency-Aware Task Queues',
+    takeaway: 'Sample summary: teams are breaking large changes into smaller, ordered tasks.',
+    whyItMatters: 'Sample context: smaller tasks can make checks and recovery easier to manage.',
   },
   {
-    title: 'Open Source Small Language Models (SLMs) Match GPT-4 on Targeted Tool Calling',
-    takeaway: 'Fine-tuned 8B parameter models running locally achieve 98% JSON schema reliability.',
-    whyItMatters: 'Drastically lowers latency and cloud costs for autonomous cron agent loops.',
+    title: 'Local Models Find Focused Roles in Tool Workflows',
+    takeaway: 'Sample summary: smaller models are being evaluated for narrow structured tasks.',
+    whyItMatters: 'Sample context: focused routing may reduce cost when quality is measured carefully.',
   },
   {
-    title: 'Context Caching & Long-Window Optimization Slashes Agent Run Costs by 70%',
-    takeaway: 'Re-evaluating static codebase tokens is no longer a financial bottleneck.',
-    whyItMatters: 'Makes persistent autonomous background maintenance economically viable.',
+    title: 'Context Caching Optimization Slashes Agent Run Costs',
+    takeaway: 'Sample summary: reusable context can reduce repeated processing in long-running workflows.',
+    whyItMatters: 'Sample context: lower repeated work can make scheduled agents more practical.',
   },
 ];
 
 export const NewsAgentVisualizer: React.FC = () => {
+  const prefersReduced = usePrefersReducedMotion();
   const [activeStep, setActiveStep] = useState<number>(4);
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
+  const intervalRef = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (intervalRef.current !== null) window.clearInterval(intervalRef.current);
+  }, []);
 
   const runSimulation = () => {
+    if (intervalRef.current !== null) window.clearInterval(intervalRef.current);
+    if (prefersReduced) {
+      setActiveStep(TIMELINE_EVENTS.length - 1);
+      setIsSimulating(false);
+      return;
+    }
     setIsSimulating(true);
     setActiveStep(0);
 
     let step = 0;
-    const interval = setInterval(() => {
+    intervalRef.current = window.setInterval(() => {
       step += 1;
       if (step < TIMELINE_EVENTS.length) {
         setActiveStep(step);
       } else {
-        clearInterval(interval);
+        if (intervalRef.current !== null) window.clearInterval(intervalRef.current);
+        intervalRef.current = null;
         setIsSimulating(false);
       }
     }, 900);
@@ -50,13 +64,13 @@ export const NewsAgentVisualizer: React.FC = () => {
   return (
     <div
       id="news-agent-visualizer"
-      className="w-full bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
+      className="w-full md:min-h-[600px] bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
     >
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4 mb-6">
         <div className="flex items-center gap-2">
           <Clock className="w-4 h-4 text-indigo-400" />
           <span className="font-mono text-xs text-zinc-300 font-medium tracking-wide uppercase">
-            Autonomous 05:00 AM Cron Research Pipeline
+            Muse by Meta · Morning Research Pipeline
           </span>
         </div>
         <button
@@ -67,7 +81,7 @@ export const NewsAgentVisualizer: React.FC = () => {
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white/[0.05] hover:bg-white/[0.1] text-xs font-mono text-zinc-300 border border-white/[0.08] transition-colors cursor-pointer disabled:opacity-50"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isSimulating ? 'animate-spin' : ''}`} />
-          <span>{isSimulating ? 'Running Pipeline...' : 'Replay 5 AM Run'}</span>
+          <span>{isSimulating ? 'Running Pipeline...' : 'Replay Morning Run'}</span>
         </button>
       </div>
 
@@ -75,7 +89,7 @@ export const NewsAgentVisualizer: React.FC = () => {
         {/* Timeline Column */}
         <div className="lg:col-span-5 space-y-3">
           <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider mb-2">
-            Execution Timeline (Daily 05:00 AM)
+            Sample Execution Timeline (Daily 08:00 AM)
           </div>
 
           <div className="relative pl-6 border-l border-white/[0.1] space-y-4">
@@ -132,12 +146,12 @@ export const NewsAgentVisualizer: React.FC = () => {
                   AI
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-white">Daily Applied AI Executive Briefing</div>
-                  <div className="text-[10px] font-mono text-zinc-500">From: news-agent@automated.rishi · 5:04 AM</div>
+                  <div className="text-xs font-semibold text-white">Daily Applied AI Briefing · Sample Headlines</div>
+                  <div className="text-[10px] font-mono text-zinc-500">Muse by Meta · 8:04 AM</div>
                 </div>
               </div>
               <span className="px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono">
-                Delivered ✓
+                Ready for review
               </span>
             </div>
 
@@ -159,8 +173,8 @@ export const NewsAgentVisualizer: React.FC = () => {
             </div>
 
             <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-zinc-500">
-              <span>Stack: CrewAI + OpenAI + Gmail API</span>
-              <span className="text-emerald-400">Time Saved: ~30 min / morning</span>
+              <span>v1: CrewAI multi-agent pipeline → v2: Muse by Meta</span>
+              <span className="text-emerald-400">Briefing ready for morning review</span>
             </div>
           </div>
         </div>

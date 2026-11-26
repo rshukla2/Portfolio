@@ -1,6 +1,6 @@
 import React from 'react';
-import { Briefcase, GraduationCap } from 'lucide-react';
-import { EXPERIENCES, EDUCATION } from '../data/portfolioData';
+import { Briefcase, GraduationCap, Download } from 'lucide-react';
+import { EXPERIENCES, EDUCATION, PERSONAL_INFO } from '../data/portfolioData';
 
 export const Experience: React.FC = () => {
   return (
@@ -15,6 +15,18 @@ export const Experience: React.FC = () => {
         <p className="text-base sm:text-xl text-zinc-300 font-light leading-relaxed">
           I am a software engineer, entrepreneur, and AI educator with a Computer Science degree and an MBA in Technological Entrepreneurship from Illinois Institute of Technology. I am fascinated by the exact point where technology stops being theoretical and starts solving a real human problem.
         </p>
+
+        <div className="pt-4">
+          <a
+            href={`${import.meta.env.BASE_URL}${PERSONAL_INFO.resumeUrl.replace('/', '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-fit items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-zinc-300 transition-colors cursor-pointer"
+          >
+            <Download className="w-4 h-4 text-zinc-400" />
+            <span>Download resume</span>
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16">
@@ -46,6 +58,20 @@ export const Experience: React.FC = () => {
                   <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed pt-1">
                     {exp.summary}
                   </p>
+
+                  {exp.metrics && (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+                      {exp.metrics.map((metric, idx) => (
+                        <div
+                          key={idx}
+                          className="rounded-lg bg-white/[0.02] border border-white/[0.05] p-3"
+                        >
+                          <div className="text-base font-semibold text-white">{metric.value}</div>
+                          <div className="text-[11px] text-zinc-500">{metric.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   {exp.skills && (
                     <div className="flex flex-wrap gap-1.5 pt-2">

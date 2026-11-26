@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, CheckCircle2, Terminal, ShieldCheck, Cpu } from 'lucide-react';
 import { useInViewport } from '../../hooks/useInViewport';
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const PIPELINE_STEPS = [
   { id: 'prd', label: 'PRD INGESTION', detail: '40-Page Product Spec' },
   { id: 'plan', label: 'DECOMPOSITION', detail: '326 Atomic Subtasks' },
-  { id: 'dag', label: 'DEPENDENCY GRAPH', detail: 'DAG Conflict Resolution' },
-  { id: 'queue', label: 'TASK QUEUE', detail: 'Context-Bounded Stream' },
-  { id: 'codex', label: 'CODEX EXECUTION', detail: 'Pre-inspects existing code' },
-  { id: 'test', label: 'AUTOMATED QA', detail: 'Unit & Integration Specs' },
-  { id: 'result', label: 'STRUCTURED MERGE', detail: '99.4% Verified Yield' },
+  { id: 'dag', label: 'DEPENDENCY GRAPH', detail: 'Dependency-aware ordering + de-dup' },
+  { id: 'queue', label: 'TASK QUEUE', detail: 'Separate project context' },
+  { id: 'codex', label: 'AGENT EXECUTION', detail: 'Reads existing modules first' },
+  { id: 'test', label: 'CHECKS + RECOVERY', detail: 'Bounded recovery attempts' },
+  { id: 'result', label: 'STRUCTURED RESULT', detail: '324/326 tasks completed' },
 ];
 
 const LOG_SNIPPETS = [
@@ -22,25 +23,26 @@ const LOG_SNIPPETS = [
 
 export const AiCodeManagerVisualizer: React.FC = () => {
   const { ref: visualizerRef, isInViewport } = useInViewport<HTMLDivElement>();
+  const prefersReduced = usePrefersReducedMotion();
   const [activeStepIndex, setActiveStepIndex] = useState<number>(4);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(!prefersReduced);
   const [currentLogIndex, setCurrentLogIndex] = useState<number>(0);
 
   useEffect(() => {
-    if (!isPlaying || !isInViewport) return;
+    if (!isPlaying || !isInViewport || prefersReduced) return;
     const interval = setInterval(() => {
       setActiveStepIndex((prev) => (prev + 1) % PIPELINE_STEPS.length);
       setCurrentLogIndex((prev) => (prev + 1) % LOG_SNIPPETS.length);
     }, 2400);
 
     return () => clearInterval(interval);
-  }, [isPlaying, isInViewport]);
+  }, [isPlaying, isInViewport, prefersReduced]);
 
   return (
     <div
       ref={visualizerRef}
       id="ai-code-manager-visualizer"
-      className="w-full bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
+      className="w-full md:min-h-[600px] bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
     >
       {/* Top Header & Interactive Toggles */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4 mb-6">
@@ -97,12 +99,12 @@ export const AiCodeManagerVisualizer: React.FC = () => {
           <div className="text-lg font-semibold text-white mt-0.5">326 Tasks</div>
         </div>
         <div className="bg-white/[0.02] border border-white/[0.05] p-3 rounded-lg">
-          <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider">Yield / Success</div>
-          <div className="text-lg font-semibold text-emerald-400 mt-0.5">324 Passed (99.4%)</div>
+          <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider">Task Completion</div>
+          <div className="text-lg font-semibold text-emerald-400 mt-0.5">324/326 (99.4%)</div>
         </div>
         <div className="bg-white/[0.02] border border-white/[0.05] p-3 rounded-lg">
           <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider">Execution Mode</div>
-          <div className="text-lg font-semibold text-indigo-300 mt-0.5">~36h Autonomous</div>
+          <div className="text-lg font-semibold text-indigo-300 mt-0.5">~36h Unattended</div>
         </div>
       </div>
 
@@ -156,9 +158,9 @@ export const AiCodeManagerVisualizer: React.FC = () => {
         <div className="flex items-center justify-between text-zinc-500 border-b border-white/[0.06] pb-2 mb-3 text-[11px]">
           <div className="flex items-center gap-2">
             <Terminal className="w-3.5 h-3.5 text-indigo-400" />
-            <span>AGENT RUNTIME TASK LOG</span>
+            <span>SAMPLE AGENT TASK LOG</span>
           </div>
-          <span className="text-zinc-500">Node: worker-daemon-01</span>
+          <span className="text-zinc-500">Illustrative task entries</span>
         </div>
 
         <div className="space-y-2 text-zinc-300">
@@ -186,7 +188,7 @@ export const AiCodeManagerVisualizer: React.FC = () => {
 
           <div className="text-[11px] text-zinc-500 flex items-center gap-1.5 pt-1">
             <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Codex verified against codebase ast snapshot prior to mutation.</span>
+            <span>Agent reads existing modules before changing them; checks run after each task. Failed tasks receive bounded recovery attempts.</span>
           </div>
         </div>
       </div>

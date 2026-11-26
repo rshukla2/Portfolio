@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, ShieldCheck, CheckCircle2, AlertTriangle, ListTodo, DollarSign, MessageSquare, Play, Pause } from 'lucide-react';
 import { useInViewport } from '../../hooks/useInViewport';
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 interface InboxPhase {
   id: string;
@@ -17,7 +18,7 @@ const PHASES: InboxPhase[] = [
     time: '8:00 PM',
     title: 'Evening Shift Triggered',
     badge: 'Cron Execution',
-    description: 'Scanning 58 emails received across the past 24 hours on business inbox.',
+    description: 'Scanning messages received across the past 24 hours on business inbox.',
     supportingNote: 'Messages are normalized into a consistent schema before analysis. Sender context, timestamps, thread history, and attachments stay linked so later stages can reason without losing provenance.',
   },
   {
@@ -39,8 +40,8 @@ const PHASES: InboxPhase[] = [
     id: 'digest',
     time: '8:05 PM',
     title: 'Daily Executive Briefing Sent',
-    badge: 'Delivered ✓',
-    description: 'Consolidated briefing answers “What actually matters?” in under 2 minutes of reading.',
+    badge: 'Delivered',
+    description: 'Consolidated briefing answers "What actually matters?" with urgent replies, extracted to-dos, and invoices.',
   },
 ];
 
@@ -48,7 +49,7 @@ const CATEGORIES = [
   { label: 'Important', count: 4, color: 'text-indigo-400 border-indigo-500/30 bg-indigo-950/20' },
   { label: 'Investors', count: 3, color: 'text-purple-400 border-purple-500/30 bg-purple-950/20' },
   { label: 'Clients & Partners', count: 7, color: 'text-emerald-400 border-emerald-500/30 bg-emerald-950/20' },
-  { label: 'Students (KIDLIN)', count: 9, color: 'text-sky-400 border-sky-500/30 bg-sky-950/20' },
+  { label: 'Students', count: 9, color: 'text-sky-400 border-sky-500/30 bg-sky-950/20' },
   { label: 'Promotional & Newsletters', count: 35, color: 'text-zinc-400 border-zinc-700/40 bg-zinc-900/30' },
 ];
 
@@ -58,7 +59,7 @@ const EXTRACTED_INSIGHTS = [
     count: '2 items',
     icon: AlertTriangle,
     iconColor: 'text-amber-400',
-    title: 'Server migration sign-off & KIDLIN cohort deadline',
+    title: 'Server migration sign-off and student cohort deadline',
     action: 'Needs decision before 10 AM tomorrow',
   },
   {
@@ -74,8 +75,8 @@ const EXTRACTED_INSIGHTS = [
     count: '1 item',
     icon: DollarSign,
     iconColor: 'text-emerald-400',
-    title: 'AWS Cloud monthly compute invoice ($214.80)',
-    action: 'Due in 5 days · Auto-debit verified',
+    title: 'Northstar Hosting monthly service invoice',
+    action: 'Sample invoice flagged for review',
   },
   {
     type: 'KEY CONVERSATIONS',
@@ -89,22 +90,23 @@ const EXTRACTED_INSIGHTS = [
 
 export const InboxManagerVisualizer: React.FC = () => {
   const { ref: visualizerRef, isInViewport } = useInViewport<HTMLDivElement>();
+  const prefersReduced = usePrefersReducedMotion();
   const [currentPhaseIndex, setCurrentPhaseIndex] = useState<number>(3);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(!prefersReduced);
 
   useEffect(() => {
-    if (!isPlaying || !isInViewport) return;
+    if (!isPlaying || !isInViewport || prefersReduced) return;
     const timer = setInterval(() => {
       setCurrentPhaseIndex((prev) => (prev + 1) % PHASES.length);
     }, 3200);
     return () => clearInterval(timer);
-  }, [isPlaying, isInViewport]);
+  }, [isPlaying, isInViewport, prefersReduced]);
 
   return (
     <div
       ref={visualizerRef}
       id="inbox-manager-visualizer"
-      className="w-full bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
+      className="w-full md:min-h-[600px] bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
     >
       {/* Top Meta Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4 mb-6">
@@ -206,9 +208,9 @@ export const InboxManagerVisualizer: React.FC = () => {
 
                   <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.04] flex items-center justify-between gap-4">
                     <div>
-                      <div className="text-sm font-semibold text-white">58 Incoming Emails (Past 24 Hours)</div>
+                      <div className="text-sm font-semibold text-white">Sample Run: Messages Received (Past 24 Hours)</div>
                       <div className="text-xs text-zinc-400 mt-1">
-                        Filtering spam gateways, fetching full message payloads, and initializing LLM batch parser.
+                        Sample volume is within the typical daily range of 50 to 60 emails.
                       </div>
                     </div>
                     <div className="text-right shrink-0">
@@ -228,7 +230,7 @@ export const InboxManagerVisualizer: React.FC = () => {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-3">
                     <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
-                      Phase 2: Semantic Understanding & Sorting
+                      Phase 2: Sample Categorization
                     </div>
                     <div className="text-[11px] font-mono text-emerald-400">No Emails Deleted Automatically</div>
                   </div>
@@ -262,7 +264,7 @@ export const InboxManagerVisualizer: React.FC = () => {
                     <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
                       Phase 3: Decision & Action Extraction
                     </div>
-                    <span className="text-xs font-mono text-indigo-400">4 Critical Clusters</span>
+                    <span className="text-xs font-mono text-indigo-400">Sample briefing groups</span>
                   </div>
 
                   <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed">
@@ -300,10 +302,10 @@ export const InboxManagerVisualizer: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-emerald-400" />
                       <span className="text-xs font-mono text-white font-medium">
-                        8:05 PM Executive Inbox Briefing
+                        8:05 PM Sample Inbox Briefing
                       </span>
                     </div>
-                    <span className="text-[11px] font-mono text-zinc-500">Delivered to Rishi</span>
+                    <span className="text-[11px] font-mono text-zinc-500">Daily briefing ready</span>
                   </div>
 
                   <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed">
@@ -339,9 +341,9 @@ export const InboxManagerVisualizer: React.FC = () => {
                   <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-zinc-400">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                      <span>35 promotional emails archived without deletion · Inbox state clean</span>
+                      <span>Sample run: promotional emails kept without auto-deletion</span>
                     </div>
-                    <span className="text-indigo-400">Total read time: ~90 seconds</span>
+                    <span className="text-indigo-400">Briefing sent at 8:05 PM</span>
                   </div>
                 </div>
               )}
@@ -353,7 +355,7 @@ export const InboxManagerVisualizer: React.FC = () => {
       {/* Understated bottom badge */}
       <div className="mt-4 pt-3 border-t border-white/[0.04] flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-zinc-500">
         <span>Runs every day at 8:00 PM via automated cron</span>
-        <span>Reduces 50 to 60 emails into actionable decisions</span>
+        <span>Reduces inbox into actionable decisions</span>
       </div>
     </div>
   );

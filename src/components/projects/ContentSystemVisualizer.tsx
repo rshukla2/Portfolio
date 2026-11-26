@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Layers, CheckCircle2, UserCheck, Video, Film, Play, Pause, GitFork } from 'lucide-react';
 import { useInViewport } from '../../hooks/useInViewport';
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 interface ContentStage {
   id: string;
@@ -16,20 +17,19 @@ interface ContentStage {
     text: string;
   }[];
 }
-
 const STAGES: ContentStage[] = [
   {
     id: 'research',
     stepNum: '01',
-    title: 'Research Agent',
-    tag: 'Automated Discovery',
-    description: 'Autonomous agent scours technical blogs, research papers, community questions, and real engineering discussions for high-signal ideas.',
-    engine: 'Perplexity + Custom Scraping',
+    title: 'Research Step',
+    tag: 'Guided Discovery',
+    description: 'A Make.com scenario gathered research inputs and organized promising ideas for the content workflow.',
+    engine: 'Make.com scenario · research step',
     outputArtifact: 'Curated Research Dossier',
     supportingDetails: [
       {
         label: 'Signal Filtering',
-        text: 'Sources are scored for technical depth, relevance, and evidence of real audience demand before they enter the research set.',
+        text: 'Research inputs are filtered for relevance and usefulness before they enter the working set.',
       },
       {
         label: 'Research Synthesis',
@@ -42,9 +42,9 @@ const STAGES: ContentStage[] = [
     stepNum: '02',
     title: 'Topic Discovery',
     tag: 'Signal Clustering',
-    description: 'Evaluates angles against audience value: practical AI implementation, agent orchestration architectures, and vibe-coding patterns.',
-    engine: 'OpenAI API / Claude Analysis',
-    outputArtifact: 'Top 3 Validated Angles',
+    description: 'Filters possible topics for usefulness, fit, and a clear teaching angle before scriptwriting begins.',
+    engine: 'Make.com · topic filter',
+    outputArtifact: 'Shortlisted Content Angles',
     supportingDetails: [
       {
         label: 'Pattern Clustering',
@@ -52,18 +52,18 @@ const STAGES: ContentStage[] = [
       },
       {
         label: 'Angle Ranking',
-        text: 'Each cluster is ranked for novelty, usefulness, and audience fit, producing three distinct angles for editorial comparison.',
+        text: 'Each cluster is compared for usefulness and audience fit, producing a shortlist for editorial review.',
       },
     ],
   },
   {
     id: 'script',
     stepNum: '03',
-    title: 'Scriptwriting Agent',
+    title: 'Script Drafting',
     tag: 'Structured Drafting',
-    description: 'Transforms raw research into structured video scripts with 3 hook variations, technical walkthrough timestamps, and visual cues.',
-    engine: 'Custom Structured Prompt Harness',
-    outputArtifact: 'Full Draft Script & Timestamps',
+    description: 'Transforms the selected research into a structured video script with hook options, teaching beats, and visual cues.',
+    engine: 'Structured script prompt',
+    outputArtifact: 'Structured Draft Script',
     supportingDetails: [
       {
         label: 'Narrative Structure',
@@ -79,15 +79,15 @@ const STAGES: ContentStage[] = [
     id: 'review',
     stepNum: '04',
     title: 'HUMAN REVIEW',
-    tag: 'Rishi Shukla (Taste & Nuance)',
+    tag: 'Required on Every Piece',
     isHuman: true,
-    description: 'Non-negotiable human taste checkpoint. Rishi personally refines tone, verifies code accuracy, adjusts pacing, and injects authentic builder stories.',
-    engine: 'Human Judgment & Editorial Taste',
+    description: 'A required human checkpoint refines tone, verifies technical claims, adjusts pacing, and approves the piece before media generation.',
+    engine: 'Human review · required gate',
     outputArtifact: 'Approved Production Script',
     supportingDetails: [
       {
         label: 'Editorial Judgment',
-        text: 'Automation pauses while Rishi rewrites generic language, sharpens the teaching sequence, and adds examples from real projects.',
+        text: 'Automation pauses while the draft is refined for specificity, teaching sequence, and authentic examples.',
       },
       {
         label: 'Approval Gate',
@@ -101,40 +101,44 @@ const STAGES: ContentStage[] = [
     title: 'Media Generation',
     tag: 'Creative AI Tooling',
     description: 'Dual-branch generation: Synthesizes speaking avatar video via HeyGen and custom cinematic B-roll visuals via Higgsfield.',
-    engine: 'HeyGen + Higgsfield APIs',
+    engine: 'HeyGen digital twins + Higgsfield B-roll',
     outputArtifact: 'Video Avatar + AI B-roll Assets',
   },
 ];
 
 export const ContentSystemVisualizer: React.FC = () => {
   const { ref: visualizerRef, isInViewport } = useInViewport<HTMLDivElement>();
+  const prefersReduced = usePrefersReducedMotion();
   const [activeStageIndex, setActiveStageIndex] = useState<number>(3);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(!prefersReduced);
 
   useEffect(() => {
-    if (!isPlaying || !isInViewport) return;
+    if (!isPlaying || !isInViewport || prefersReduced) return;
     const interval = setInterval(() => {
       setActiveStageIndex((prev) => (prev + 1) % STAGES.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [isPlaying, isInViewport]);
+  }, [isPlaying, isInViewport, prefersReduced]);
 
   return (
     <div
       ref={visualizerRef}
       id="content-system-visualizer"
-      className="w-full bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
+      className="w-full md:min-h-[600px] bg-[#0D0F14] border border-white/[0.08] rounded-xl p-5 md:p-7 text-left shadow-2xl relative overflow-hidden"
     >
       {/* Top Meta Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4 mb-6">
         <div className="flex items-center gap-2">
           <Layers className="w-4 h-4 text-indigo-400" />
           <span className="font-mono text-xs text-zinc-300 font-medium tracking-wide uppercase">
-            End-to-End Content Engine · Make.com Orchestration Layer
+            Content Creation System · Make.com Orchestration
           </span>
         </div>
 
         <div className="flex items-center gap-3">
+          <div className="px-2 py-0.5 rounded bg-zinc-500/10 border border-zinc-500/20 text-[11px] font-mono text-zinc-300">
+            Archived
+          </div>
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-mono text-indigo-300">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
             <span>Make.com Flow</span>
@@ -227,16 +231,14 @@ export const ContentSystemVisualizer: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <span
                     className={`font-mono text-xs px-2 py-0.5 rounded font-bold ${
-                      stage.isHuman
-                        ? 'bg-amber-500/20 text-amber-300'
-                        : 'bg-indigo-500/20 text-indigo-300'
+                      stage.isHuman ? 'bg-amber-500/20 text-amber-300' : 'bg-indigo-500/20 text-indigo-300'
                     }`}
                   >
                     Stage {stage.stepNum}
                   </span>
                   <span className="text-sm font-semibold text-white">{stage.title}</span>
                   {stage.isHuman && (
-                    <span className="text-xs text-amber-400 font-mono font-medium flex items-center gap-1">
+                    <span className="text-xs text-amber-400 font-mono flex items-center gap-1">
                       <UserCheck className="w-3.5 h-3.5" />
                       Human Taste Checkpoint
                     </span>
@@ -268,7 +270,7 @@ export const ContentSystemVisualizer: React.FC = () => {
                         <span className="text-[10px] font-mono text-indigo-300">Digital Twin / Avatar</span>
                       </div>
                       <div className="text-xs text-zinc-300 font-light">
-                        Rishi’s configured digital twin avatars render high-definition video speech directly from approved script cues.
+                        Configured digital twins render video from the human-approved script and production cues.
                       </div>
                       <div className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 pt-1">
                         <CheckCircle2 className="w-3 h-3" />
@@ -346,8 +348,8 @@ export const ContentSystemVisualizer: React.FC = () => {
 
       {/* Supporting philosophy footer quote */}
       <div className="mt-4 pt-3 border-t border-white/[0.04] flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-zinc-500">
-        <span>“The goal isn’t to remove creativity from content creation. It’s to remove the repetitive work surrounding it.”</span>
-        <span className="text-indigo-400">Make.com Multi-Node Pipeline</span>
+        <span>"The goal isn't to remove creativity from content creation. It's to remove the repetitive work surrounding it."</span>
+        <span className="text-indigo-400">Archived · Human review on every piece</span>
       </div>
     </div>
   );

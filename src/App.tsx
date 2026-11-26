@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { CareerHighlights } from './components/CareerHighlights';
 import { Philosophy } from './components/Philosophy';
 import { FeaturedProjects } from './components/FeaturedProjects';
 import { Approach } from './components/Approach';
@@ -76,6 +77,7 @@ export default function App() {
         ) : (
           <>
             <Hero />
+            <CareerHighlights />
             <Philosophy />
             <FeaturedProjects />
             <Approach />
