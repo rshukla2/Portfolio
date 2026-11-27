@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 const SECTION_ITEMS = [
@@ -16,6 +16,23 @@ const TOP_ALIASES = ['hero', 'hero-section', 'highlights'];
 export function SectionRail({ activeSection }: { activeSection: string }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const lastKnownRef = useRef('hero-section');
+
+  // Phones only: names show while scrolling and fade out ~1.5s after scrolling stops.
+  // Starts visible so first-time visitors see the full list once.
+  const [isScrolling, setIsScrolling] = useState(true);
+  useEffect(() => {
+    let timer = window.setTimeout(() => setIsScrolling(false), 1500);
+    const onScroll = () => {
+      setIsScrolling(true);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setIsScrolling(false), 1500);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   // Resolve active rail item; sections not on the rail keep the previous one lit.
   if (TOP_ALIASES.includes(activeSection)) {
@@ -68,10 +85,12 @@ export function SectionRail({ activeSection }: { activeSection: string }) {
                 />
               </span>
               <span
-                className={`whitespace-nowrap rounded-full border border-white/10 bg-[#090A0D]/80 px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider text-zinc-200 backdrop-blur transition-opacity duration-200 ${
+                className={`whitespace-nowrap rounded-full border bg-[#090A0D]/80 px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider backdrop-blur transition-[color,opacity] duration-300 max-sm:absolute max-sm:right-full max-sm:mr-1 ${
+                  isScrolling ? '' : 'max-sm:opacity-0 max-sm:pointer-events-none'
+                } ${
                   isActive
-                    ? 'opacity-100'
-                    : 'hidden sm:inline opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100'
+                    ? 'border-white/10 text-zinc-200'
+                    : 'border-white/[0.05] text-zinc-500 group-hover:text-zinc-300 group-focus-visible:text-zinc-300'
                 }`}
               >
                 {item.label}
