@@ -194,7 +194,7 @@ export const FeaturedProjects: React.FC = () => {
       {/* Projects by Tier */}
       {projectsByTier.map(({ tier, projects }, tierIndex) => {
         return (
-          <div key={tier.tier} className="mt-36 sm:mt-48 first:mt-0">
+          <div key={tier.tier} className="mt-[4.5rem] sm:mt-24 first:mt-0">
             {/* Tier Header: reads as a new chapter, clearly above project headlines */}
             <div className="relative mb-16 sm:mb-24 pt-12 sm:pt-16">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-indigo-500/60 via-white/[0.08] to-transparent" aria-hidden="true" />
@@ -217,7 +217,7 @@ export const FeaturedProjects: React.FC = () => {
             </div>
 
             {/* Projects in this tier */}
-            <div className="space-y-28 sm:space-y-36">
+            <div className="space-y-14 sm:space-y-[4.5rem]">
             {projects.map((project) => {
               const isFlagship = tier.tier === 'flagship';
               const headlineSize = 'text-2xl sm:text-4xl';

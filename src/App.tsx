@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
+import { SectionRail } from './components/SectionRail';
 import { Hero } from './components/Hero';
 import { CareerHighlights } from './components/CareerHighlights';
 import { Philosophy } from './components/Philosophy';
@@ -28,7 +29,7 @@ export default function App() {
   const isMusePage = routePath === '/muse';
 
   useEffect(() => {
-    const sections = document.querySelectorAll('section[id]');
+    const sections = document.querySelectorAll('section[id], #hero-section');
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -70,6 +71,7 @@ export default function App() {
       />
 
       <Header activeSection={activeSection} isMusePage={isMusePage} />
+      {!isMusePage && <SectionRail activeSection={activeSection} />}
 
       <main className="relative z-10">
         {isMusePage ? (
