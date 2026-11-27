@@ -44,8 +44,19 @@ export const Hero: React.FC = () => {
       <div className="relative z-20 max-w-4xl space-y-8 sm:space-y-10 lg:max-w-[62%] xl:max-w-[59%]">
         <div className="flex flex-wrap items-center gap-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11px] font-mono tracking-widest text-zinc-300 uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-            {PERSONAL_INFO.eyebrow}
+            <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-indigo-400 animate-pulse" />
+            {/* Wrap only between roles, keep each "·" at the end of its line, center when wrapped */}
+            <span className="text-center">
+              {PERSONAL_INFO.eyebrow.split(' · ').map((part, i, parts) => (
+                <span key={part}>
+                  <span className="whitespace-nowrap">
+                    {part}
+                    {i < parts.length - 1 ? ' ·' : ''}
+                  </span>
+                  {i < parts.length - 1 ? ' ' : ''}
+                </span>
+              ))}
+            </span>
           </div>
         </div>
 

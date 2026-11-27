@@ -17,15 +17,15 @@ export function SectionRail({ activeSection }: { activeSection: string }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const lastKnownRef = useRef('hero-section');
 
-  // Phones only: names show while scrolling and fade out ~1.5s after scrolling stops.
+  // Phones only: names show while scrolling and fade out ~1s after scrolling stops.
   // Starts visible so first-time visitors see the full list once.
   const [isScrolling, setIsScrolling] = useState(true);
   useEffect(() => {
-    let timer = window.setTimeout(() => setIsScrolling(false), 1500);
+    let timer = window.setTimeout(() => setIsScrolling(false), 1000);
     const onScroll = () => {
       setIsScrolling(true);
       window.clearTimeout(timer);
-      timer = window.setTimeout(() => setIsScrolling(false), 1500);
+      timer = window.setTimeout(() => setIsScrolling(false), 1000);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
